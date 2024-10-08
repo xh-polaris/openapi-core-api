@@ -1,1 +1,1 @@
-# open-platform
+# openapi-core-api
