@@ -4,6 +4,8 @@ package core_api
 
 import (
 	"context"
+	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
+	"github.com/xh-polaris/openapi-core-api/provider"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -21,9 +23,9 @@ func GenerateKey(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.KeyService.GenerateKey(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // GetKeys .
@@ -37,9 +39,9 @@ func GetKeys(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.GetKeysResp)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.KeyService.GetKeys(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // UpdateKey .
@@ -53,9 +55,9 @@ func UpdateKey(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.KeyService.UpdateKey(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // RefreshKey .
@@ -69,9 +71,9 @@ func RefreshKey(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.KeyService.RefreshKey(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // UpdateHosts .
@@ -85,9 +87,9 @@ func UpdateHosts(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.KeyService.UpdateHosts(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // DeleteKey .
@@ -101,7 +103,7 @@ func DeleteKey(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.KeyService.DeleteKey(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }

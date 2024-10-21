@@ -3,13 +3,14 @@ package adaptor
 import (
 	"context"
 	"errors"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/json"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/util"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/util/log"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/basic"
-	"openapi-core_api/biz/infrastructure/config"
-	"openapi-core_api/biz/infrastructure/util"
-	"openapi-core_api/biz/infrastructure/util/log"
 )
 
 const hertzContext = "hertz_context"

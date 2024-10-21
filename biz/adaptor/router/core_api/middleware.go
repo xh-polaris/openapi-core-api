@@ -140,3 +140,13 @@ func _signupMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _getuserinfoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _setuserinfoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

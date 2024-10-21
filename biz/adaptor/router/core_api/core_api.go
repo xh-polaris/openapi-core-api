@@ -53,6 +53,8 @@ func Register(r *server.Hertz) {
 	}
 	{
 		_user := root.Group("/user", _userMw()...)
+		_user.GET("/info", append(_getuserinfoMw(), core_api.GetUserInfo)...)
+		_user.POST("/info", append(_setuserinfoMw(), core_api.SetUserInfo)...)
 		_user.POST("/sign_up", append(_signupMw(), core_api.SignUp)...)
 	}
 }

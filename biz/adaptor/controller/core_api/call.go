@@ -4,6 +4,8 @@ package core_api
 
 import (
 	"context"
+	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
+	"github.com/xh-polaris/openapi-core-api/provider"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -21,7 +23,7 @@ func CallInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.CallInterfaceResp)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.CallService.CallInterface(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }

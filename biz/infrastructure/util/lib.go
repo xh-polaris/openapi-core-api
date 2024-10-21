@@ -1,6 +1,7 @@
 package util
 
 import (
+	"github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
 	"strconv"
 	"sync"
 
@@ -37,4 +38,28 @@ func ParallelRun(fns ...func()) {
 		})
 	}
 	wg.Wait()
+}
+
+func GetMsg(resp interface{ GetMsg() string }, msg string) string {
+	if resp == nil {
+		return msg
+	}
+	return resp.GetMsg()
+}
+
+func FailResponse(resp interface{ GetMsg() string }, msg string) *core_api.Response {
+	return &core_api.Response{
+		Done: false,
+		Msg:  GetMsg(resp, msg),
+	}
+}
+
+func SuccessResponse(resp interface {
+	GetMsg() string
+	GetDone() bool
+}) (*core_api.Response, error) {
+	return &core_api.Response{
+		Done: resp.GetDone(),
+		Msg:  resp.GetMsg(),
+	}, nil
 }

@@ -4,6 +4,8 @@ package core_api
 
 import (
 	"context"
+	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
+	"github.com/xh-polaris/openapi-core-api/provider"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -21,9 +23,9 @@ func CreateBaseInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.CreateBaseInterface(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // UpdateBaseInterface .
@@ -37,9 +39,9 @@ func UpdateBaseInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.UpdateBaseInterface(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // DeleteBaseInterface .
@@ -53,9 +55,9 @@ func DeleteBaseInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.DeleteBaseInterface(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // GetBaseInterfaces .
@@ -69,9 +71,9 @@ func GetBaseInterfaces(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.GetBaseInterfacesResp)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.GetBaseInterfaces(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // CreateFullInterface .
@@ -85,9 +87,9 @@ func CreateFullInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.CreateFullInterface(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // UpdateFullInterface .
@@ -101,9 +103,9 @@ func UpdateFullInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.UpdateFullInterface(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // UpdateMargin .
@@ -117,9 +119,9 @@ func UpdateMargin(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.UpdateMargin(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // DeleteFullInterface .
@@ -133,9 +135,9 @@ func DeleteFullInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.DeleteFullInterface(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // GetFullInterfaces .
@@ -149,9 +151,9 @@ func GetFullInterfaces(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.GetFullInterfacesResp)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.GetFullInterfaces(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // CreateGradient .
@@ -165,9 +167,9 @@ func CreateGradient(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.CreateGradient(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // UpdateGradient .
@@ -181,9 +183,9 @@ func UpdateGradient(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.Response)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.UpdateGradient(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 
 // GetGradient .
@@ -197,7 +199,7 @@ func GetGradient(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.GetGradientResp)
-
-	c.JSON(consts.StatusOK, resp)
+	p := provider.Get()
+	resp, err := p.ChargeService.GetGradient(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }

@@ -4,6 +4,8 @@ package core_api
 
 import (
 	"context"
+	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
+	"github.com/xh-polaris/openapi-core-api/provider"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -21,7 +23,39 @@ func SignUp(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(core_api.SignUpResp)
+	p := provider.Get()
+	resp, err := p.UserService.SignUp(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
+}
 
-	c.JSON(consts.StatusOK, resp)
+// GetUserInfo .
+// @router /user/info [GET]
+func GetUserInfo(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req core_api.GetUserInfoReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	p := provider.Get()
+	resp, err := p.UserService.GetUserInfo(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
+}
+
+// SetUserInfo .
+// @router /user/info [POST]
+func SetUserInfo(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req core_api.SetUserInfoReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	p := provider.Get()
+	resp, err := p.UserService.SetUserInfo(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
