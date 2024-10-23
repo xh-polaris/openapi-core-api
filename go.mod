@@ -5,12 +5,14 @@ go 1.21
 require (
 	github.com/bytedance/gopkg v0.1.1
 	github.com/cloudwego/hertz v0.9.3
-	github.com/go-resty/resty/v2 v2.15.3
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/wire v0.5.0
+	github.com/hertz-contrib/monitor-prometheus v0.0.0-20221109015426-47eab4e08245
+	github.com/hertz-contrib/obs-opentelemetry/tracing v0.2.2
+	github.com/jinzhu/copier v0.3.5
 	github.com/xh-polaris/gopkg v0.0.0-20231209130217-cd07835dcd83
 	github.com/xh-polaris/meowchat-core-api v1.0.78
-	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241017085722-c7397deab8e6
+	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241023025447-d8c8da230f5e
 	github.com/zeromicro/go-zero v1.7.2
 	go.opentelemetry.io/contrib/propagators/b3 v1.17.0
 	go.opentelemetry.io/otel v1.24.0

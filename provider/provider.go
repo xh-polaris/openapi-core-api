@@ -33,7 +33,8 @@ func Get() *Provider {
 
 var RPCSet = wire.NewSet(
 	openapi_charge.OpenapiChargeSet,
-	openapi_user.OpenapiUserSet)
+	openapi_user.OpenapiUserSet,
+)
 
 var ApplicationSet = wire.NewSet(
 	service.CallServiceSet,

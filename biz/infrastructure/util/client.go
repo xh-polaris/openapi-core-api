@@ -67,7 +67,7 @@ func (c *HttpClient) SendRequest(method, url string, headers map[string]string, 
 	// 反序列化响应体
 	var responseMap map[string]interface{}
 	if err := json.Unmarshal(responseBody, &responseMap); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+		return nil, fmt.Errorf("反序列化响应失败: %w", err)
 	}
 
 	return responseMap, nil

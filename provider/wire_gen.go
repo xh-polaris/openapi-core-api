@@ -20,17 +20,21 @@ func NewProvider() (*Provider, error) {
 	if err != nil {
 		return nil, err
 	}
-	callService := service.CallService{}
-	client := openapi_charge.NewOpenapiCharge(configConfig)
-	openapiCharge := &openapi_charge.OpenapiCharge{
+	client := openapi_user.NewOpenapiUser(configConfig)
+	openapiUser := &openapi_user.OpenapiUser{
 		Client: client,
+	}
+	chargeClient := openapi_charge.NewOpenapiCharge(configConfig)
+	openapiCharge := &openapi_charge.OpenapiCharge{
+		Client: chargeClient,
+	}
+	callService := service.CallService{
+		Config:       configConfig,
+		UserClient:   openapiUser,
+		ChargeClient: openapiCharge,
 	}
 	chargeService := service.ChargeService{
 		ChargeClient: openapiCharge,
-	}
-	userClient := openapi_user.NewOpenapiUser(configConfig)
-	openapiUser := &openapi_user.OpenapiUser{
-		Client: userClient,
 	}
 	keyService := service.KeyService{
 		KeyClient: openapiUser,

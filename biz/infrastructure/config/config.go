@@ -18,8 +18,9 @@ type Auth struct {
 
 type Config struct {
 	service.ServiceConf
-	ListenOn string
-	Auth     Auth
+	ListenOn      string
+	TimeThreshold int64
+	Auth          Auth
 }
 
 func NewConfig() (*Config, error) {
