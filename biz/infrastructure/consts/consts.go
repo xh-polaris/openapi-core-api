@@ -30,3 +30,9 @@ const (
 	InvalidSignatureCode     = 1006
 	InvalidSignature         = "签名不匹配"
 )
+
+// role
+const (
+	Admin = "admin"
+	User  = "user"
+)

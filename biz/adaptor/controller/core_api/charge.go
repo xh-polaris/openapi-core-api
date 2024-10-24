@@ -5,11 +5,13 @@ package core_api
 import (
 	"context"
 	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/util"
 	"github.com/xh-polaris/openapi-core-api/provider"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	core_api "github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
+	constsx "github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 )
 
 // CreateBaseInterface .
@@ -20,6 +22,11 @@ func CreateBaseInterface(ctx context.Context, c *app.RequestContext) {
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+	// 权限校验
+	if util.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
 
@@ -39,6 +46,12 @@ func UpdateBaseInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	// 权限校验
+	if util.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
+		return
+	}
+
 	p := provider.Get()
 	resp, err := p.ChargeService.UpdateBaseInterface(ctx, &req)
 	adaptor.PostProcess(ctx, c, &req, resp, err)
@@ -52,6 +65,12 @@ func DeleteBaseInterface(ctx context.Context, c *app.RequestContext) {
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	// 权限校验
+	if util.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
 
@@ -87,6 +106,12 @@ func CreateFullInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	// 权限校验
+	if util.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
+		return
+	}
+
 	p := provider.Get()
 	resp, err := p.ChargeService.CreateFullInterface(ctx, &req)
 	adaptor.PostProcess(ctx, c, &req, resp, err)
@@ -100,6 +125,12 @@ func UpdateFullInterface(ctx context.Context, c *app.RequestContext) {
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	// 权限校验
+	if util.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
 
@@ -119,6 +150,12 @@ func UpdateMargin(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	// 权限校验
+	if util.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
+		return
+	}
+
 	p := provider.Get()
 	resp, err := p.ChargeService.UpdateMargin(ctx, &req)
 	adaptor.PostProcess(ctx, c, &req, resp, err)
@@ -132,6 +169,12 @@ func DeleteFullInterface(ctx context.Context, c *app.RequestContext) {
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	// 权限校验
+	if util.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
 
@@ -180,6 +223,12 @@ func UpdateGradient(ctx context.Context, c *app.RequestContext) {
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	// 权限校验
+	if util.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
 
