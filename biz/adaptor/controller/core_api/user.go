@@ -59,3 +59,19 @@ func SetUserInfo(ctx context.Context, c *app.RequestContext) {
 	resp, err := p.UserService.SetUserInfo(ctx, &req)
 	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
+
+// SignIn .
+// @router /user/sign_in [POST]
+func SignIn(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req core_api.SignUpReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	p := provider.Get()
+	resp, err := p.UserService.SignIn(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
+}

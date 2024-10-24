@@ -167,6 +167,142 @@ func (x *SignUpResp) GetAccessExpire() int64 {
 	return 0
 }
 
+// 登录请求
+type SignInReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AuthType   string  `protobuf:"bytes,1,opt,name=authType,proto3" form:"authType" json:"authType" query:"authType"` // 电话
+	AuthId     string  `protobuf:"bytes,2,opt,name=authId,proto3" form:"authId" json:"authId" query:"authId"`         // 电话号码或邮箱
+	Password   *string `protobuf:"bytes,3,opt,name=password,proto3,oneof" form:"password" json:"password" query:"password"`
+	VerifyCode *string `protobuf:"bytes,4,opt,name=verifyCode,proto3,oneof" form:"verifyCode" json:"verifyCode" query:"verifyCode"`
+}
+
+func (x *SignInReq) Reset() {
+	*x = SignInReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_openapi_core_api_common_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SignInReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignInReq) ProtoMessage() {}
+
+func (x *SignInReq) ProtoReflect() protoreflect.Message {
+	mi := &file_openapi_core_api_common_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignInReq.ProtoReflect.Descriptor instead.
+func (*SignInReq) Descriptor() ([]byte, []int) {
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *SignInReq) GetAuthType() string {
+	if x != nil {
+		return x.AuthType
+	}
+	return ""
+}
+
+func (x *SignInReq) GetAuthId() string {
+	if x != nil {
+		return x.AuthId
+	}
+	return ""
+}
+
+func (x *SignInReq) GetPassword() string {
+	if x != nil && x.Password != nil {
+		return *x.Password
+	}
+	return ""
+}
+
+func (x *SignInReq) GetVerifyCode() string {
+	if x != nil && x.VerifyCode != nil {
+		return *x.VerifyCode
+	}
+	return ""
+}
+
+// 登录响应
+type SignInResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId       string `protobuf:"bytes,1,opt,name=userId,proto3" form:"userId" json:"userId" query:"userId"`
+	AccessToken  string `protobuf:"bytes,2,opt,name=accessToken,proto3" form:"accessToken" json:"accessToken" query:"accessToken"`
+	AccessExpire int64  `protobuf:"varint,3,opt,name=accessExpire,proto3" form:"accessExpire" json:"accessExpire" query:"accessExpire"`
+}
+
+func (x *SignInResp) Reset() {
+	*x = SignInResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_openapi_core_api_common_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SignInResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignInResp) ProtoMessage() {}
+
+func (x *SignInResp) ProtoReflect() protoreflect.Message {
+	mi := &file_openapi_core_api_common_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignInResp.ProtoReflect.Descriptor instead.
+func (*SignInResp) Descriptor() ([]byte, []int) {
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *SignInResp) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *SignInResp) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
+}
+
+func (x *SignInResp) GetAccessExpire() int64 {
+	if x != nil {
+		return x.AccessExpire
+	}
+	return 0
+}
+
 // 获取用户信息请求
 type GetUserInfoReq struct {
 	state         protoimpl.MessageState
@@ -177,7 +313,7 @@ type GetUserInfoReq struct {
 func (x *GetUserInfoReq) Reset() {
 	*x = GetUserInfoReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[2]
+		mi := &file_openapi_core_api_common_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -190,7 +326,7 @@ func (x *GetUserInfoReq) String() string {
 func (*GetUserInfoReq) ProtoMessage() {}
 
 func (x *GetUserInfoReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[2]
+	mi := &file_openapi_core_api_common_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -203,7 +339,7 @@ func (x *GetUserInfoReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserInfoReq.ProtoReflect.Descriptor instead.
 func (*GetUserInfoReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{2}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{4}
 }
 
 // 获取用户信息响应
@@ -222,7 +358,7 @@ type GetUserInfoResp struct {
 func (x *GetUserInfoResp) Reset() {
 	*x = GetUserInfoResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[3]
+		mi := &file_openapi_core_api_common_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -235,7 +371,7 @@ func (x *GetUserInfoResp) String() string {
 func (*GetUserInfoResp) ProtoMessage() {}
 
 func (x *GetUserInfoResp) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[3]
+	mi := &file_openapi_core_api_common_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -248,7 +384,7 @@ func (x *GetUserInfoResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserInfoResp.ProtoReflect.Descriptor instead.
 func (*GetUserInfoResp) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{3}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetUserInfoResp) GetUsername() string {
@@ -299,7 +435,7 @@ type SetUserInfoReq struct {
 func (x *SetUserInfoReq) Reset() {
 	*x = SetUserInfoReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[4]
+		mi := &file_openapi_core_api_common_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -312,7 +448,7 @@ func (x *SetUserInfoReq) String() string {
 func (*SetUserInfoReq) ProtoMessage() {}
 
 func (x *SetUserInfoReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[4]
+	mi := &file_openapi_core_api_common_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -325,7 +461,7 @@ func (x *SetUserInfoReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetUserInfoReq.ProtoReflect.Descriptor instead.
 func (*SetUserInfoReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{4}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SetUserInfoReq) GetUsername() string {
@@ -355,7 +491,7 @@ type GenerateKeyReq struct {
 func (x *GenerateKeyReq) Reset() {
 	*x = GenerateKeyReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[5]
+		mi := &file_openapi_core_api_common_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -368,7 +504,7 @@ func (x *GenerateKeyReq) String() string {
 func (*GenerateKeyReq) ProtoMessage() {}
 
 func (x *GenerateKeyReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[5]
+	mi := &file_openapi_core_api_common_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -381,7 +517,7 @@ func (x *GenerateKeyReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenerateKeyReq.ProtoReflect.Descriptor instead.
 func (*GenerateKeyReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{5}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GenerateKeyReq) GetName() string {
@@ -410,7 +546,7 @@ type GetKeysReq struct {
 func (x *GetKeysReq) Reset() {
 	*x = GetKeysReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[6]
+		mi := &file_openapi_core_api_common_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -423,7 +559,7 @@ func (x *GetKeysReq) String() string {
 func (*GetKeysReq) ProtoMessage() {}
 
 func (x *GetKeysReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[6]
+	mi := &file_openapi_core_api_common_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -436,7 +572,7 @@ func (x *GetKeysReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetKeysReq.ProtoReflect.Descriptor instead.
 func (*GetKeysReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{6}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetKeysReq) GetPaginationOptions() *basic.PaginationOptions {
@@ -459,7 +595,7 @@ type GetKeysResp struct {
 func (x *GetKeysResp) Reset() {
 	*x = GetKeysResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[7]
+		mi := &file_openapi_core_api_common_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -472,7 +608,7 @@ func (x *GetKeysResp) String() string {
 func (*GetKeysResp) ProtoMessage() {}
 
 func (x *GetKeysResp) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[7]
+	mi := &file_openapi_core_api_common_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -485,7 +621,7 @@ func (x *GetKeysResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetKeysResp.ProtoReflect.Descriptor instead.
 func (*GetKeysResp) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{7}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetKeysResp) GetKeys() []*user.Key {
@@ -518,7 +654,7 @@ type UpdateKeyReq struct {
 func (x *UpdateKeyReq) Reset() {
 	*x = UpdateKeyReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[8]
+		mi := &file_openapi_core_api_common_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -531,7 +667,7 @@ func (x *UpdateKeyReq) String() string {
 func (*UpdateKeyReq) ProtoMessage() {}
 
 func (x *UpdateKeyReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[8]
+	mi := &file_openapi_core_api_common_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -544,7 +680,7 @@ func (x *UpdateKeyReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateKeyReq.ProtoReflect.Descriptor instead.
 func (*UpdateKeyReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{8}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *UpdateKeyReq) GetId() string {
@@ -594,7 +730,7 @@ type RefreshKeyReq struct {
 func (x *RefreshKeyReq) Reset() {
 	*x = RefreshKeyReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[9]
+		mi := &file_openapi_core_api_common_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -607,7 +743,7 @@ func (x *RefreshKeyReq) String() string {
 func (*RefreshKeyReq) ProtoMessage() {}
 
 func (x *RefreshKeyReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[9]
+	mi := &file_openapi_core_api_common_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -620,7 +756,7 @@ func (x *RefreshKeyReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshKeyReq.ProtoReflect.Descriptor instead.
 func (*RefreshKeyReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{9}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *RefreshKeyReq) GetId() string {
@@ -643,7 +779,7 @@ type UpdateHostReq struct {
 func (x *UpdateHostReq) Reset() {
 	*x = UpdateHostReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[10]
+		mi := &file_openapi_core_api_common_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -656,7 +792,7 @@ func (x *UpdateHostReq) String() string {
 func (*UpdateHostReq) ProtoMessage() {}
 
 func (x *UpdateHostReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[10]
+	mi := &file_openapi_core_api_common_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -669,7 +805,7 @@ func (x *UpdateHostReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHostReq.ProtoReflect.Descriptor instead.
 func (*UpdateHostReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{10}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UpdateHostReq) GetId() string {
@@ -698,7 +834,7 @@ type DeleteKeyReq struct {
 func (x *DeleteKeyReq) Reset() {
 	*x = DeleteKeyReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[11]
+		mi := &file_openapi_core_api_common_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -711,7 +847,7 @@ func (x *DeleteKeyReq) String() string {
 func (*DeleteKeyReq) ProtoMessage() {}
 
 func (x *DeleteKeyReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[11]
+	mi := &file_openapi_core_api_common_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -724,7 +860,7 @@ func (x *DeleteKeyReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteKeyReq.ProtoReflect.Descriptor instead.
 func (*DeleteKeyReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{11}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *DeleteKeyReq) GetId() string {
@@ -752,7 +888,7 @@ type CreateBaseInterfaceReq struct {
 func (x *CreateBaseInterfaceReq) Reset() {
 	*x = CreateBaseInterfaceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[12]
+		mi := &file_openapi_core_api_common_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -765,7 +901,7 @@ func (x *CreateBaseInterfaceReq) String() string {
 func (*CreateBaseInterfaceReq) ProtoMessage() {}
 
 func (x *CreateBaseInterfaceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[12]
+	mi := &file_openapi_core_api_common_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -778,7 +914,7 @@ func (x *CreateBaseInterfaceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBaseInterfaceReq.ProtoReflect.Descriptor instead.
 func (*CreateBaseInterfaceReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{12}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *CreateBaseInterfaceReq) GetName() string {
@@ -850,7 +986,7 @@ type UpdateBaseInterfaceReq struct {
 func (x *UpdateBaseInterfaceReq) Reset() {
 	*x = UpdateBaseInterfaceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[13]
+		mi := &file_openapi_core_api_common_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -863,7 +999,7 @@ func (x *UpdateBaseInterfaceReq) String() string {
 func (*UpdateBaseInterfaceReq) ProtoMessage() {}
 
 func (x *UpdateBaseInterfaceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[13]
+	mi := &file_openapi_core_api_common_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -876,7 +1012,7 @@ func (x *UpdateBaseInterfaceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBaseInterfaceReq.ProtoReflect.Descriptor instead.
 func (*UpdateBaseInterfaceReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{13}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *UpdateBaseInterfaceReq) GetId() string {
@@ -954,7 +1090,7 @@ type DeleteBaseInterfaceReq struct {
 func (x *DeleteBaseInterfaceReq) Reset() {
 	*x = DeleteBaseInterfaceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[14]
+		mi := &file_openapi_core_api_common_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -967,7 +1103,7 @@ func (x *DeleteBaseInterfaceReq) String() string {
 func (*DeleteBaseInterfaceReq) ProtoMessage() {}
 
 func (x *DeleteBaseInterfaceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[14]
+	mi := &file_openapi_core_api_common_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -980,7 +1116,7 @@ func (x *DeleteBaseInterfaceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBaseInterfaceReq.ProtoReflect.Descriptor instead.
 func (*DeleteBaseInterfaceReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{14}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *DeleteBaseInterfaceReq) GetId() string {
@@ -1002,7 +1138,7 @@ type GetBaseInterfacesReq struct {
 func (x *GetBaseInterfacesReq) Reset() {
 	*x = GetBaseInterfacesReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[15]
+		mi := &file_openapi_core_api_common_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1015,7 +1151,7 @@ func (x *GetBaseInterfacesReq) String() string {
 func (*GetBaseInterfacesReq) ProtoMessage() {}
 
 func (x *GetBaseInterfacesReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[15]
+	mi := &file_openapi_core_api_common_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1028,7 +1164,7 @@ func (x *GetBaseInterfacesReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBaseInterfacesReq.ProtoReflect.Descriptor instead.
 func (*GetBaseInterfacesReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{15}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetBaseInterfacesReq) GetPaginationOptions() *basic.PaginationOptions {
@@ -1051,7 +1187,7 @@ type GetBaseInterfacesResp struct {
 func (x *GetBaseInterfacesResp) Reset() {
 	*x = GetBaseInterfacesResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[16]
+		mi := &file_openapi_core_api_common_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1064,7 +1200,7 @@ func (x *GetBaseInterfacesResp) String() string {
 func (*GetBaseInterfacesResp) ProtoMessage() {}
 
 func (x *GetBaseInterfacesResp) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[16]
+	mi := &file_openapi_core_api_common_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1077,7 +1213,7 @@ func (x *GetBaseInterfacesResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBaseInterfacesResp.ProtoReflect.Descriptor instead.
 func (*GetBaseInterfacesResp) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{16}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GetBaseInterfacesResp) GetBaseInterfaces() []*charge.BaseInterface {
@@ -1110,7 +1246,7 @@ type CreateFullInterfaceReq struct {
 func (x *CreateFullInterfaceReq) Reset() {
 	*x = CreateFullInterfaceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[17]
+		mi := &file_openapi_core_api_common_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1123,7 +1259,7 @@ func (x *CreateFullInterfaceReq) String() string {
 func (*CreateFullInterfaceReq) ProtoMessage() {}
 
 func (x *CreateFullInterfaceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[17]
+	mi := &file_openapi_core_api_common_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1136,7 +1272,7 @@ func (x *CreateFullInterfaceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateFullInterfaceReq.ProtoReflect.Descriptor instead.
 func (*CreateFullInterfaceReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{17}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *CreateFullInterfaceReq) GetBaseInterfaceId() string {
@@ -1189,7 +1325,7 @@ type UpdateFullInterfaceReq struct {
 func (x *UpdateFullInterfaceReq) Reset() {
 	*x = UpdateFullInterfaceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[18]
+		mi := &file_openapi_core_api_common_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1202,7 +1338,7 @@ func (x *UpdateFullInterfaceReq) String() string {
 func (*UpdateFullInterfaceReq) ProtoMessage() {}
 
 func (x *UpdateFullInterfaceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[18]
+	mi := &file_openapi_core_api_common_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1215,7 +1351,7 @@ func (x *UpdateFullInterfaceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateFullInterfaceReq.ProtoReflect.Descriptor instead.
 func (*UpdateFullInterfaceReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{18}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *UpdateFullInterfaceReq) GetId() string {
@@ -1259,7 +1395,7 @@ type UpdateMarginReq struct {
 func (x *UpdateMarginReq) Reset() {
 	*x = UpdateMarginReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[19]
+		mi := &file_openapi_core_api_common_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1272,7 +1408,7 @@ func (x *UpdateMarginReq) String() string {
 func (*UpdateMarginReq) ProtoMessage() {}
 
 func (x *UpdateMarginReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[19]
+	mi := &file_openapi_core_api_common_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1285,7 +1421,7 @@ func (x *UpdateMarginReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateMarginReq.ProtoReflect.Descriptor instead.
 func (*UpdateMarginReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{19}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *UpdateMarginReq) GetId() string {
@@ -1314,7 +1450,7 @@ type DeleteFullInterfaceReq struct {
 func (x *DeleteFullInterfaceReq) Reset() {
 	*x = DeleteFullInterfaceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[20]
+		mi := &file_openapi_core_api_common_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1327,7 +1463,7 @@ func (x *DeleteFullInterfaceReq) String() string {
 func (*DeleteFullInterfaceReq) ProtoMessage() {}
 
 func (x *DeleteFullInterfaceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[20]
+	mi := &file_openapi_core_api_common_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1340,7 +1476,7 @@ func (x *DeleteFullInterfaceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteFullInterfaceReq.ProtoReflect.Descriptor instead.
 func (*DeleteFullInterfaceReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{20}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *DeleteFullInterfaceReq) GetId() string {
@@ -1363,7 +1499,7 @@ type GetFullInterfacesReq struct {
 func (x *GetFullInterfacesReq) Reset() {
 	*x = GetFullInterfacesReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[21]
+		mi := &file_openapi_core_api_common_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1376,7 +1512,7 @@ func (x *GetFullInterfacesReq) String() string {
 func (*GetFullInterfacesReq) ProtoMessage() {}
 
 func (x *GetFullInterfacesReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[21]
+	mi := &file_openapi_core_api_common_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1389,7 +1525,7 @@ func (x *GetFullInterfacesReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFullInterfacesReq.ProtoReflect.Descriptor instead.
 func (*GetFullInterfacesReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{21}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GetFullInterfacesReq) GetUserId() string {
@@ -1419,7 +1555,7 @@ type GetFullInterfacesResp struct {
 func (x *GetFullInterfacesResp) Reset() {
 	*x = GetFullInterfacesResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[22]
+		mi := &file_openapi_core_api_common_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1432,7 +1568,7 @@ func (x *GetFullInterfacesResp) String() string {
 func (*GetFullInterfacesResp) ProtoMessage() {}
 
 func (x *GetFullInterfacesResp) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[22]
+	mi := &file_openapi_core_api_common_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1445,7 +1581,7 @@ func (x *GetFullInterfacesResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFullInterfacesResp.ProtoReflect.Descriptor instead.
 func (*GetFullInterfacesResp) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{22}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *GetFullInterfacesResp) GetFullInterfaces() []*charge.FullInterface {
@@ -1475,7 +1611,7 @@ type CreateGradientReq struct {
 func (x *CreateGradientReq) Reset() {
 	*x = CreateGradientReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[23]
+		mi := &file_openapi_core_api_common_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1488,7 +1624,7 @@ func (x *CreateGradientReq) String() string {
 func (*CreateGradientReq) ProtoMessage() {}
 
 func (x *CreateGradientReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[23]
+	mi := &file_openapi_core_api_common_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1501,7 +1637,7 @@ func (x *CreateGradientReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateGradientReq.ProtoReflect.Descriptor instead.
 func (*CreateGradientReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{23}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *CreateGradientReq) GetBaseInterfaceId() string {
@@ -1532,7 +1668,7 @@ type UpdateGradientReq struct {
 func (x *UpdateGradientReq) Reset() {
 	*x = UpdateGradientReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[24]
+		mi := &file_openapi_core_api_common_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1545,7 +1681,7 @@ func (x *UpdateGradientReq) String() string {
 func (*UpdateGradientReq) ProtoMessage() {}
 
 func (x *UpdateGradientReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[24]
+	mi := &file_openapi_core_api_common_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1558,7 +1694,7 @@ func (x *UpdateGradientReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGradientReq.ProtoReflect.Descriptor instead.
 func (*UpdateGradientReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{24}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *UpdateGradientReq) GetId() string {
@@ -1594,7 +1730,7 @@ type GetGradientReq struct {
 func (x *GetGradientReq) Reset() {
 	*x = GetGradientReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[25]
+		mi := &file_openapi_core_api_common_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1607,7 +1743,7 @@ func (x *GetGradientReq) String() string {
 func (*GetGradientReq) ProtoMessage() {}
 
 func (x *GetGradientReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[25]
+	mi := &file_openapi_core_api_common_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1620,7 +1756,7 @@ func (x *GetGradientReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGradientReq.ProtoReflect.Descriptor instead.
 func (*GetGradientReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{25}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *GetGradientReq) GetBaseInterfaceId() string {
@@ -1642,7 +1778,7 @@ type GetGradientResp struct {
 func (x *GetGradientResp) Reset() {
 	*x = GetGradientResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[26]
+		mi := &file_openapi_core_api_common_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1655,7 +1791,7 @@ func (x *GetGradientResp) String() string {
 func (*GetGradientResp) ProtoMessage() {}
 
 func (x *GetGradientResp) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[26]
+	mi := &file_openapi_core_api_common_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1668,7 +1804,7 @@ func (x *GetGradientResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGradientResp.ProtoReflect.Descriptor instead.
 func (*GetGradientResp) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{26}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *GetGradientResp) GetGradient() *charge.Gradient {
@@ -1691,7 +1827,7 @@ type GetLogReq struct {
 func (x *GetLogReq) Reset() {
 	*x = GetLogReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[27]
+		mi := &file_openapi_core_api_common_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1704,7 +1840,7 @@ func (x *GetLogReq) String() string {
 func (*GetLogReq) ProtoMessage() {}
 
 func (x *GetLogReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[27]
+	mi := &file_openapi_core_api_common_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1717,7 +1853,7 @@ func (x *GetLogReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLogReq.ProtoReflect.Descriptor instead.
 func (*GetLogReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{27}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *GetLogReq) GetFullInterfaceId() string {
@@ -1747,7 +1883,7 @@ type GetLogResp struct {
 func (x *GetLogResp) Reset() {
 	*x = GetLogResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[28]
+		mi := &file_openapi_core_api_common_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1760,7 +1896,7 @@ func (x *GetLogResp) String() string {
 func (*GetLogResp) ProtoMessage() {}
 
 func (x *GetLogResp) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[28]
+	mi := &file_openapi_core_api_common_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1773,7 +1909,7 @@ func (x *GetLogResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLogResp.ProtoReflect.Descriptor instead.
 func (*GetLogResp) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{28}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *GetLogResp) GetLogs() []*charge.Log {
@@ -1807,7 +1943,7 @@ type CallInterfaceReq struct {
 func (x *CallInterfaceReq) Reset() {
 	*x = CallInterfaceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[29]
+		mi := &file_openapi_core_api_common_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1820,7 +1956,7 @@ func (x *CallInterfaceReq) String() string {
 func (*CallInterfaceReq) ProtoMessage() {}
 
 func (x *CallInterfaceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[29]
+	mi := &file_openapi_core_api_common_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1833,7 +1969,7 @@ func (x *CallInterfaceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CallInterfaceReq.ProtoReflect.Descriptor instead.
 func (*CallInterfaceReq) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{29}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *CallInterfaceReq) GetKey() string {
@@ -1884,7 +2020,7 @@ type CallInterfaceResp struct {
 func (x *CallInterfaceResp) Reset() {
 	*x = CallInterfaceResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[30]
+		mi := &file_openapi_core_api_common_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1897,7 +2033,7 @@ func (x *CallInterfaceResp) String() string {
 func (*CallInterfaceResp) ProtoMessage() {}
 
 func (x *CallInterfaceResp) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[30]
+	mi := &file_openapi_core_api_common_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1910,7 +2046,7 @@ func (x *CallInterfaceResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CallInterfaceResp.ProtoReflect.Descriptor instead.
 func (*CallInterfaceResp) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{30}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *CallInterfaceResp) GetCode() int64 {
@@ -1947,7 +2083,7 @@ type Response struct {
 func (x *Response) Reset() {
 	*x = Response{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openapi_core_api_common_proto_msgTypes[31]
+		mi := &file_openapi_core_api_common_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1960,7 +2096,7 @@ func (x *Response) String() string {
 func (*Response) ProtoMessage() {}
 
 func (x *Response) ProtoReflect() protoreflect.Message {
-	mi := &file_openapi_core_api_common_proto_msgTypes[31]
+	mi := &file_openapi_core_api_common_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1973,7 +2109,7 @@ func (x *Response) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Response.ProtoReflect.Descriptor instead.
 func (*Response) Descriptor() ([]byte, []int) {
-	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{31}
+	return file_openapi_core_api_common_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *Response) GetDone() bool {
@@ -2016,6 +2152,23 @@ var file_openapi_core_api_common_proto_rawDesc = []byte{
 	0x52, 0x6f, 0x6c, 0x65, 0x52, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x70,
 	0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x42, 0x0d, 0x0a, 0x0b, 0x5f, 0x76, 0x65, 0x72, 0x69,
 	0x66, 0x79, 0x43, 0x6f, 0x64, 0x65, 0x22, 0x6a, 0x0a, 0x0a, 0x53, 0x69, 0x67, 0x6e, 0x55, 0x70,
+	0x52, 0x65, 0x73, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b,
+	0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x22,
+	0x0a, 0x0c, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x45, 0x78, 0x70, 0x69,
+	0x72, 0x65, 0x22, 0xa1, 0x01, 0x0a, 0x09, 0x53, 0x69, 0x67, 0x6e, 0x49, 0x6e, 0x52, 0x65, 0x71,
+	0x12, 0x1a, 0x0a, 0x08, 0x61, 0x75, 0x74, 0x68, 0x54, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x61, 0x75, 0x74, 0x68, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06,
+	0x61, 0x75, 0x74, 0x68, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x61, 0x75,
+	0x74, 0x68, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f,
+	0x72, 0x64, 0x88, 0x01, 0x01, 0x12, 0x23, 0x0a, 0x0a, 0x76, 0x65, 0x72, 0x69, 0x66, 0x79, 0x43,
+	0x6f, 0x64, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x48, 0x01, 0x52, 0x0a, 0x76, 0x65, 0x72,
+	0x69, 0x66, 0x79, 0x43, 0x6f, 0x64, 0x65, 0x88, 0x01, 0x01, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x70,
+	0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x42, 0x0d, 0x0a, 0x0b, 0x5f, 0x76, 0x65, 0x72, 0x69,
+	0x66, 0x79, 0x43, 0x6f, 0x64, 0x65, 0x22, 0x6a, 0x0a, 0x0a, 0x53, 0x69, 0x67, 0x6e, 0x49, 0x6e,
 	0x52, 0x65, 0x73, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b,
 	0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28,
@@ -2257,84 +2410,86 @@ func file_openapi_core_api_common_proto_rawDescGZIP() []byte {
 	return file_openapi_core_api_common_proto_rawDescData
 }
 
-var file_openapi_core_api_common_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
+var file_openapi_core_api_common_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
 var file_openapi_core_api_common_proto_goTypes = []interface{}{
 	(*SignUpReq)(nil),               // 0: openapi.core_api.SignUpReq
 	(*SignUpResp)(nil),              // 1: openapi.core_api.SignUpResp
-	(*GetUserInfoReq)(nil),          // 2: openapi.core_api.GetUserInfoReq
-	(*GetUserInfoResp)(nil),         // 3: openapi.core_api.GetUserInfoResp
-	(*SetUserInfoReq)(nil),          // 4: openapi.core_api.SetUserInfoReq
-	(*GenerateKeyReq)(nil),          // 5: openapi.core_api.GenerateKeyReq
-	(*GetKeysReq)(nil),              // 6: openapi.core_api.GetKeysReq
-	(*GetKeysResp)(nil),             // 7: openapi.core_api.GetKeysResp
-	(*UpdateKeyReq)(nil),            // 8: openapi.core_api.UpdateKeyReq
-	(*RefreshKeyReq)(nil),           // 9: openapi.core_api.RefreshKeyReq
-	(*UpdateHostReq)(nil),           // 10: openapi.core_api.UpdateHostReq
-	(*DeleteKeyReq)(nil),            // 11: openapi.core_api.DeleteKeyReq
-	(*CreateBaseInterfaceReq)(nil),  // 12: openapi.core_api.CreateBaseInterfaceReq
-	(*UpdateBaseInterfaceReq)(nil),  // 13: openapi.core_api.UpdateBaseInterfaceReq
-	(*DeleteBaseInterfaceReq)(nil),  // 14: openapi.core_api.DeleteBaseInterfaceReq
-	(*GetBaseInterfacesReq)(nil),    // 15: openapi.core_api.GetBaseInterfacesReq
-	(*GetBaseInterfacesResp)(nil),   // 16: openapi.core_api.GetBaseInterfacesResp
-	(*CreateFullInterfaceReq)(nil),  // 17: openapi.core_api.CreateFullInterfaceReq
-	(*UpdateFullInterfaceReq)(nil),  // 18: openapi.core_api.UpdateFullInterfaceReq
-	(*UpdateMarginReq)(nil),         // 19: openapi.core_api.UpdateMarginReq
-	(*DeleteFullInterfaceReq)(nil),  // 20: openapi.core_api.DeleteFullInterfaceReq
-	(*GetFullInterfacesReq)(nil),    // 21: openapi.core_api.GetFullInterfacesReq
-	(*GetFullInterfacesResp)(nil),   // 22: openapi.core_api.GetFullInterfacesResp
-	(*CreateGradientReq)(nil),       // 23: openapi.core_api.CreateGradientReq
-	(*UpdateGradientReq)(nil),       // 24: openapi.core_api.UpdateGradientReq
-	(*GetGradientReq)(nil),          // 25: openapi.core_api.GetGradientReq
-	(*GetGradientResp)(nil),         // 26: openapi.core_api.GetGradientResp
-	(*GetLogReq)(nil),               // 27: openapi.core_api.GetLogReq
-	(*GetLogResp)(nil),              // 28: openapi.core_api.GetLogResp
-	(*CallInterfaceReq)(nil),        // 29: openapi.core_api.CallInterfaceReq
-	(*CallInterfaceResp)(nil),       // 30: openapi.core_api.CallInterfaceResp
-	(*Response)(nil),                // 31: openapi.core_api.Response
-	(user.Role)(0),                  // 32: openapi.user.Role
-	(user.UserStatus)(0),            // 33: openapi.user.UserStatus
-	(*basic.PaginationOptions)(nil), // 34: basic.PaginationOptions
-	(*user.Key)(nil),                // 35: openapi.user.Key
-	(user.KeyStatus)(0),             // 36: openapi.user.KeyStatus
-	(charge.MethodType)(0),          // 37: openapi.charge.MethodType
-	(charge.PassWayType)(0),         // 38: openapi.charge.PassWayType
-	(*charge.Parameter)(nil),        // 39: openapi.charge.Parameter
-	(charge.InterfaceStatus)(0),     // 40: openapi.charge.InterfaceStatus
-	(*charge.BaseInterface)(nil),    // 41: openapi.charge.BaseInterface
-	(charge.ChargeType)(0),          // 42: openapi.charge.ChargeType
-	(*charge.FullInterface)(nil),    // 43: openapi.charge.FullInterface
-	(*charge.Discount)(nil),         // 44: openapi.charge.Discount
-	(*charge.Gradient)(nil),         // 45: openapi.charge.Gradient
-	(*charge.Log)(nil),              // 46: openapi.charge.Log
+	(*SignInReq)(nil),               // 2: openapi.core_api.SignInReq
+	(*SignInResp)(nil),              // 3: openapi.core_api.SignInResp
+	(*GetUserInfoReq)(nil),          // 4: openapi.core_api.GetUserInfoReq
+	(*GetUserInfoResp)(nil),         // 5: openapi.core_api.GetUserInfoResp
+	(*SetUserInfoReq)(nil),          // 6: openapi.core_api.SetUserInfoReq
+	(*GenerateKeyReq)(nil),          // 7: openapi.core_api.GenerateKeyReq
+	(*GetKeysReq)(nil),              // 8: openapi.core_api.GetKeysReq
+	(*GetKeysResp)(nil),             // 9: openapi.core_api.GetKeysResp
+	(*UpdateKeyReq)(nil),            // 10: openapi.core_api.UpdateKeyReq
+	(*RefreshKeyReq)(nil),           // 11: openapi.core_api.RefreshKeyReq
+	(*UpdateHostReq)(nil),           // 12: openapi.core_api.UpdateHostReq
+	(*DeleteKeyReq)(nil),            // 13: openapi.core_api.DeleteKeyReq
+	(*CreateBaseInterfaceReq)(nil),  // 14: openapi.core_api.CreateBaseInterfaceReq
+	(*UpdateBaseInterfaceReq)(nil),  // 15: openapi.core_api.UpdateBaseInterfaceReq
+	(*DeleteBaseInterfaceReq)(nil),  // 16: openapi.core_api.DeleteBaseInterfaceReq
+	(*GetBaseInterfacesReq)(nil),    // 17: openapi.core_api.GetBaseInterfacesReq
+	(*GetBaseInterfacesResp)(nil),   // 18: openapi.core_api.GetBaseInterfacesResp
+	(*CreateFullInterfaceReq)(nil),  // 19: openapi.core_api.CreateFullInterfaceReq
+	(*UpdateFullInterfaceReq)(nil),  // 20: openapi.core_api.UpdateFullInterfaceReq
+	(*UpdateMarginReq)(nil),         // 21: openapi.core_api.UpdateMarginReq
+	(*DeleteFullInterfaceReq)(nil),  // 22: openapi.core_api.DeleteFullInterfaceReq
+	(*GetFullInterfacesReq)(nil),    // 23: openapi.core_api.GetFullInterfacesReq
+	(*GetFullInterfacesResp)(nil),   // 24: openapi.core_api.GetFullInterfacesResp
+	(*CreateGradientReq)(nil),       // 25: openapi.core_api.CreateGradientReq
+	(*UpdateGradientReq)(nil),       // 26: openapi.core_api.UpdateGradientReq
+	(*GetGradientReq)(nil),          // 27: openapi.core_api.GetGradientReq
+	(*GetGradientResp)(nil),         // 28: openapi.core_api.GetGradientResp
+	(*GetLogReq)(nil),               // 29: openapi.core_api.GetLogReq
+	(*GetLogResp)(nil),              // 30: openapi.core_api.GetLogResp
+	(*CallInterfaceReq)(nil),        // 31: openapi.core_api.CallInterfaceReq
+	(*CallInterfaceResp)(nil),       // 32: openapi.core_api.CallInterfaceResp
+	(*Response)(nil),                // 33: openapi.core_api.Response
+	(user.Role)(0),                  // 34: openapi.user.Role
+	(user.UserStatus)(0),            // 35: openapi.user.UserStatus
+	(*basic.PaginationOptions)(nil), // 36: basic.PaginationOptions
+	(*user.Key)(nil),                // 37: openapi.user.Key
+	(user.KeyStatus)(0),             // 38: openapi.user.KeyStatus
+	(charge.MethodType)(0),          // 39: openapi.charge.MethodType
+	(charge.PassWayType)(0),         // 40: openapi.charge.PassWayType
+	(*charge.Parameter)(nil),        // 41: openapi.charge.Parameter
+	(charge.InterfaceStatus)(0),     // 42: openapi.charge.InterfaceStatus
+	(*charge.BaseInterface)(nil),    // 43: openapi.charge.BaseInterface
+	(charge.ChargeType)(0),          // 44: openapi.charge.ChargeType
+	(*charge.FullInterface)(nil),    // 45: openapi.charge.FullInterface
+	(*charge.Discount)(nil),         // 46: openapi.charge.Discount
+	(*charge.Gradient)(nil),         // 47: openapi.charge.Gradient
+	(*charge.Log)(nil),              // 48: openapi.charge.Log
 }
 var file_openapi_core_api_common_proto_depIdxs = []int32{
-	32, // 0: openapi.core_api.SignUpReq.role:type_name -> openapi.user.Role
-	32, // 1: openapi.core_api.GetUserInfoResp.role:type_name -> openapi.user.Role
-	33, // 2: openapi.core_api.GetUserInfoResp.status:type_name -> openapi.user.UserStatus
-	33, // 3: openapi.core_api.SetUserInfoReq.status:type_name -> openapi.user.UserStatus
-	34, // 4: openapi.core_api.GetKeysReq.paginationOptions:type_name -> basic.PaginationOptions
-	35, // 5: openapi.core_api.GetKeysResp.keys:type_name -> openapi.user.Key
-	36, // 6: openapi.core_api.UpdateKeyReq.status:type_name -> openapi.user.KeyStatus
-	37, // 7: openapi.core_api.CreateBaseInterfaceReq.method:type_name -> openapi.charge.MethodType
-	38, // 8: openapi.core_api.CreateBaseInterfaceReq.passWay:type_name -> openapi.charge.PassWayType
-	39, // 9: openapi.core_api.CreateBaseInterfaceReq.params:type_name -> openapi.charge.Parameter
-	37, // 10: openapi.core_api.UpdateBaseInterfaceReq.method:type_name -> openapi.charge.MethodType
-	38, // 11: openapi.core_api.UpdateBaseInterfaceReq.passWay:type_name -> openapi.charge.PassWayType
-	39, // 12: openapi.core_api.UpdateBaseInterfaceReq.params:type_name -> openapi.charge.Parameter
-	40, // 13: openapi.core_api.UpdateBaseInterfaceReq.status:type_name -> openapi.charge.InterfaceStatus
-	34, // 14: openapi.core_api.GetBaseInterfacesReq.paginationOptions:type_name -> basic.PaginationOptions
-	41, // 15: openapi.core_api.GetBaseInterfacesResp.baseInterfaces:type_name -> openapi.charge.BaseInterface
-	42, // 16: openapi.core_api.CreateFullInterfaceReq.chargeType:type_name -> openapi.charge.ChargeType
-	42, // 17: openapi.core_api.UpdateFullInterfaceReq.chargeType:type_name -> openapi.charge.ChargeType
-	40, // 18: openapi.core_api.UpdateFullInterfaceReq.status:type_name -> openapi.charge.InterfaceStatus
-	34, // 19: openapi.core_api.GetFullInterfacesReq.paginationOptions:type_name -> basic.PaginationOptions
-	43, // 20: openapi.core_api.GetFullInterfacesResp.fullInterfaces:type_name -> openapi.charge.FullInterface
-	44, // 21: openapi.core_api.CreateGradientReq.discounts:type_name -> openapi.charge.Discount
-	44, // 22: openapi.core_api.UpdateGradientReq.discounts:type_name -> openapi.charge.Discount
-	40, // 23: openapi.core_api.UpdateGradientReq.status:type_name -> openapi.charge.InterfaceStatus
-	45, // 24: openapi.core_api.GetGradientResp.gradient:type_name -> openapi.charge.Gradient
-	34, // 25: openapi.core_api.GetLogReq.paginationOptions:type_name -> basic.PaginationOptions
-	46, // 26: openapi.core_api.GetLogResp.logs:type_name -> openapi.charge.Log
+	34, // 0: openapi.core_api.SignUpReq.role:type_name -> openapi.user.Role
+	34, // 1: openapi.core_api.GetUserInfoResp.role:type_name -> openapi.user.Role
+	35, // 2: openapi.core_api.GetUserInfoResp.status:type_name -> openapi.user.UserStatus
+	35, // 3: openapi.core_api.SetUserInfoReq.status:type_name -> openapi.user.UserStatus
+	36, // 4: openapi.core_api.GetKeysReq.paginationOptions:type_name -> basic.PaginationOptions
+	37, // 5: openapi.core_api.GetKeysResp.keys:type_name -> openapi.user.Key
+	38, // 6: openapi.core_api.UpdateKeyReq.status:type_name -> openapi.user.KeyStatus
+	39, // 7: openapi.core_api.CreateBaseInterfaceReq.method:type_name -> openapi.charge.MethodType
+	40, // 8: openapi.core_api.CreateBaseInterfaceReq.passWay:type_name -> openapi.charge.PassWayType
+	41, // 9: openapi.core_api.CreateBaseInterfaceReq.params:type_name -> openapi.charge.Parameter
+	39, // 10: openapi.core_api.UpdateBaseInterfaceReq.method:type_name -> openapi.charge.MethodType
+	40, // 11: openapi.core_api.UpdateBaseInterfaceReq.passWay:type_name -> openapi.charge.PassWayType
+	41, // 12: openapi.core_api.UpdateBaseInterfaceReq.params:type_name -> openapi.charge.Parameter
+	42, // 13: openapi.core_api.UpdateBaseInterfaceReq.status:type_name -> openapi.charge.InterfaceStatus
+	36, // 14: openapi.core_api.GetBaseInterfacesReq.paginationOptions:type_name -> basic.PaginationOptions
+	43, // 15: openapi.core_api.GetBaseInterfacesResp.baseInterfaces:type_name -> openapi.charge.BaseInterface
+	44, // 16: openapi.core_api.CreateFullInterfaceReq.chargeType:type_name -> openapi.charge.ChargeType
+	44, // 17: openapi.core_api.UpdateFullInterfaceReq.chargeType:type_name -> openapi.charge.ChargeType
+	42, // 18: openapi.core_api.UpdateFullInterfaceReq.status:type_name -> openapi.charge.InterfaceStatus
+	36, // 19: openapi.core_api.GetFullInterfacesReq.paginationOptions:type_name -> basic.PaginationOptions
+	45, // 20: openapi.core_api.GetFullInterfacesResp.fullInterfaces:type_name -> openapi.charge.FullInterface
+	46, // 21: openapi.core_api.CreateGradientReq.discounts:type_name -> openapi.charge.Discount
+	46, // 22: openapi.core_api.UpdateGradientReq.discounts:type_name -> openapi.charge.Discount
+	42, // 23: openapi.core_api.UpdateGradientReq.status:type_name -> openapi.charge.InterfaceStatus
+	47, // 24: openapi.core_api.GetGradientResp.gradient:type_name -> openapi.charge.Gradient
+	36, // 25: openapi.core_api.GetLogReq.paginationOptions:type_name -> basic.PaginationOptions
+	48, // 26: openapi.core_api.GetLogResp.logs:type_name -> openapi.charge.Log
 	27, // [27:27] is the sub-list for method output_type
 	27, // [27:27] is the sub-list for method input_type
 	27, // [27:27] is the sub-list for extension type_name
@@ -2372,7 +2527,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserInfoReq); i {
+			switch v := v.(*SignInReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2384,7 +2539,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserInfoResp); i {
+			switch v := v.(*SignInResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2396,7 +2551,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetUserInfoReq); i {
+			switch v := v.(*GetUserInfoReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2408,7 +2563,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GenerateKeyReq); i {
+			switch v := v.(*GetUserInfoResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2420,7 +2575,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetKeysReq); i {
+			switch v := v.(*SetUserInfoReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2432,7 +2587,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetKeysResp); i {
+			switch v := v.(*GenerateKeyReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2444,7 +2599,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateKeyReq); i {
+			switch v := v.(*GetKeysReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2456,7 +2611,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RefreshKeyReq); i {
+			switch v := v.(*GetKeysResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2468,7 +2623,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateHostReq); i {
+			switch v := v.(*UpdateKeyReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2480,7 +2635,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteKeyReq); i {
+			switch v := v.(*RefreshKeyReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2492,7 +2647,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateBaseInterfaceReq); i {
+			switch v := v.(*UpdateHostReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2504,7 +2659,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateBaseInterfaceReq); i {
+			switch v := v.(*DeleteKeyReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2516,7 +2671,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteBaseInterfaceReq); i {
+			switch v := v.(*CreateBaseInterfaceReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2528,7 +2683,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetBaseInterfacesReq); i {
+			switch v := v.(*UpdateBaseInterfaceReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2540,7 +2695,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetBaseInterfacesResp); i {
+			switch v := v.(*DeleteBaseInterfaceReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2552,7 +2707,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateFullInterfaceReq); i {
+			switch v := v.(*GetBaseInterfacesReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2564,7 +2719,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateFullInterfaceReq); i {
+			switch v := v.(*GetBaseInterfacesResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2576,7 +2731,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateMarginReq); i {
+			switch v := v.(*CreateFullInterfaceReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2588,7 +2743,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteFullInterfaceReq); i {
+			switch v := v.(*UpdateFullInterfaceReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2600,7 +2755,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetFullInterfacesReq); i {
+			switch v := v.(*UpdateMarginReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2612,7 +2767,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetFullInterfacesResp); i {
+			switch v := v.(*DeleteFullInterfaceReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2624,7 +2779,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateGradientReq); i {
+			switch v := v.(*GetFullInterfacesReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2636,7 +2791,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateGradientReq); i {
+			switch v := v.(*GetFullInterfacesResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2648,7 +2803,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetGradientReq); i {
+			switch v := v.(*CreateGradientReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2660,7 +2815,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetGradientResp); i {
+			switch v := v.(*UpdateGradientReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2672,7 +2827,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetLogReq); i {
+			switch v := v.(*GetGradientReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2684,7 +2839,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetLogResp); i {
+			switch v := v.(*GetGradientResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2696,7 +2851,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CallInterfaceReq); i {
+			switch v := v.(*GetLogReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2708,7 +2863,7 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CallInterfaceResp); i {
+			switch v := v.(*GetLogResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2720,6 +2875,30 @@ func file_openapi_core_api_common_proto_init() {
 			}
 		}
 		file_openapi_core_api_common_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CallInterfaceReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_openapi_core_api_common_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CallInterfaceResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_openapi_core_api_common_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Response); i {
 			case 0:
 				return &v.state
@@ -2733,15 +2912,16 @@ func file_openapi_core_api_common_proto_init() {
 		}
 	}
 	file_openapi_core_api_common_proto_msgTypes[0].OneofWrappers = []interface{}{}
-	file_openapi_core_api_common_proto_msgTypes[4].OneofWrappers = []interface{}{}
-	file_openapi_core_api_common_proto_msgTypes[8].OneofWrappers = []interface{}{}
+	file_openapi_core_api_common_proto_msgTypes[2].OneofWrappers = []interface{}{}
+	file_openapi_core_api_common_proto_msgTypes[6].OneofWrappers = []interface{}{}
+	file_openapi_core_api_common_proto_msgTypes[10].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_openapi_core_api_common_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   32,
+			NumMessages:   34,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

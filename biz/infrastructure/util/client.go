@@ -92,3 +92,28 @@ func (c *HttpClient) SignUp(authType string, authId string, verifyCode string) (
 	}
 	return resp, nil
 }
+
+// SignIn 用于用户登录
+func (c *HttpClient) SignIn(authType string, authId string, verifyCode string, password string) (map[string]interface{}, error) {
+
+	body := make(map[string]interface{})
+	body["authType"] = authType
+	body["authId"] = authId
+	if verifyCode != "" {
+		body["verifyCode"] = verifyCode
+	}
+	if password != "" {
+		body["password"] = password
+	}
+	body["appId"] = 13
+
+	header := make(map[string]string)
+	header["Content-Type"] = consts.ContentTypeJson
+	header["Charset"] = consts.CharSetUTF8
+
+	resp, err := c.SendRequest(consts.Get, consts.PlatformUrl, header, body)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

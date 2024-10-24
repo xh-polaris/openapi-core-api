@@ -150,3 +150,8 @@ func _setuserinfoMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _signinMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

@@ -6,7 +6,7 @@ import (
 	"github.com/google/wire"
 	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
 	"github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
-	user "github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/user"
+	"github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/user"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
@@ -32,7 +32,7 @@ var UserServiceSet = wire.NewSet(
 func (s *UserService) SignUp(ctx context.Context, req *core_api.SignUpReq) (*core_api.SignUpResp, error) {
 	// 在中台注册账户
 	httpClient := util.NewHttpClient()
-	httpResp, err := httpClient.SignUp(req.AuthType, req.AuthId, req.AuthId)
+	httpResp, err := httpClient.SignUp(req.AuthType, req.AuthId, *req.VerifyCode)
 	if err != nil {
 		return nil, err
 	}
@@ -97,4 +97,44 @@ func (s *UserService) SetUserInfo(ctx context.Context, req *core_api.SetUserInfo
 	}
 
 	return util.SuccessResponse(resp)
+}
+
+func (s *UserService) SignIn(ctx context.Context, req *core_api.SignUpReq) (*core_api.SignInResp, error) {
+	// 在中台登录账户
+	httpClient := util.NewHttpClient()
+	httpResp, err := httpClient.SignIn(req.AuthType, req.AuthId, *req.VerifyCode, *req.Password)
+	if err != nil {
+		return nil, err
+	}
+	userId := httpResp["userId"].(string)
+
+	// 校验用户初始化是否成功
+	info, err := s.UserClient.GetUserInfo(ctx, &genuser.GetUserInfoReq{
+		UserId: userId,
+	})
+	// 获取失败
+	if err != nil {
+		return nil, err
+	}
+	// 先前用户初始化失败，补偿初始化
+	if info == nil || info.UserId == "" {
+		resp, err2 := s.UserClient.SignUp(ctx, &genuser.SignUpReq{
+			UserId: userId,
+			Role:   genuser.Role(req.Role),
+		})
+		if err2 != nil {
+			return nil, err
+		}
+		// 初始化失败
+		if resp.Done == false {
+			return nil, errors.New(resp.Msg)
+		}
+	}
+
+	// 返回登录信息
+	return &core_api.SignInResp{
+		UserId:       userId,
+		AccessToken:  httpResp["accessToken"].(string),
+		AccessExpire: httpResp["accessExpire"].(int64),
+	}, nil
 }
