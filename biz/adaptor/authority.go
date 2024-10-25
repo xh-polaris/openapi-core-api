@@ -1,8 +1,7 @@
-package util
+package adaptor
 
 import (
 	"context"
-	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
 	genuser "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
 )
@@ -27,7 +26,7 @@ type RightsManager struct {
 }
 
 func (m *RightsManager) AdminOnly(ctx context.Context) bool {
-	userMeta := adaptor.ExtractUserMeta(ctx)
+	userMeta := ExtractUserMeta(ctx)
 	if userMeta.GetUserId() == "" {
 		return false
 	}
