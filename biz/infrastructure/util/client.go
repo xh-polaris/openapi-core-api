@@ -88,7 +88,12 @@ func (c *HttpClient) SignUp(authType string, authId string, verifyCode string) (
 	header["Content-Type"] = consts.ContentTypeJson
 	header["Charset"] = consts.CharSetUTF8
 
-	resp, err := c.SendRequest(consts.Get, consts.PlatformUrl, header, body)
+	// 如果是测试环境则向测试环境的中台发送请求
+	if config.GetConfig().Mode == "test" {
+		header["X-Xh-Env"] = "test"
+	}
+
+	resp, err := c.SendRequest(consts.Post, consts.PlatformUrl, header, body)
 	if err != nil {
 		return nil, err
 	}
