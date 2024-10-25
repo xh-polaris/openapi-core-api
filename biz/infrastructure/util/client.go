@@ -76,12 +76,12 @@ func (c *HttpClient) SendRequest(method, url string, headers map[string]string, 
 }
 
 // SignUp 用于用户初始化
-func (c *HttpClient) SignUp(authType string, authId string, verifyCode string) (map[string]interface{}, error) {
+func (c *HttpClient) SignUp(authType string, authId string, verifyCode *string) (map[string]interface{}, error) {
 
 	body := make(map[string]interface{})
 	body["authType"] = authType
 	body["authId"] = authId
-	body["verifyCode"] = verifyCode
+	body["verifyCode"] = *verifyCode
 	body["appId"] = 13
 
 	header := make(map[string]string)
@@ -101,16 +101,16 @@ func (c *HttpClient) SignUp(authType string, authId string, verifyCode string) (
 }
 
 // SignIn 用于用户登录
-func (c *HttpClient) SignIn(authType string, authId string, verifyCode string, password string) (map[string]interface{}, error) {
+func (c *HttpClient) SignIn(authType string, authId string, verifyCode *string, password *string) (map[string]interface{}, error) {
 
 	body := make(map[string]interface{})
 	body["authType"] = authType
 	body["authId"] = authId
-	if verifyCode != "" {
-		body["verifyCode"] = verifyCode
+	if verifyCode != nil {
+		body["verifyCode"] = *verifyCode
 	}
-	if password != "" {
-		body["password"] = password
+	if password != nil {
+		body["password"] = *password
 	}
 	body["appId"] = 13
 
@@ -118,7 +118,7 @@ func (c *HttpClient) SignIn(authType string, authId string, verifyCode string, p
 	header["Content-Type"] = consts.ContentTypeJson
 	header["Charset"] = consts.CharSetUTF8
 
-	// 如果是测试环境则向测试环境的中台发送请求
+	// 如果是测试环境则向测试环境中台发送请求
 	if config.GetConfig().Mode == "test" {
 		header["X-Xh-Env"] = "test"
 	}

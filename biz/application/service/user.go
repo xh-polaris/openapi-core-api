@@ -32,7 +32,7 @@ var UserServiceSet = wire.NewSet(
 func (s *UserService) SignUp(ctx context.Context, req *core_api.SignUpReq) (*core_api.SignUpResp, error) {
 	// 在中台注册账户
 	httpClient := util.NewHttpClient()
-	httpResp, err := httpClient.SignUp(req.AuthType, req.AuthId, *req.VerifyCode)
+	httpResp, err := httpClient.SignUp(req.AuthType, req.AuthId, req.VerifyCode)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (s *UserService) SignUp(ctx context.Context, req *core_api.SignUpReq) (*cor
 		AccessToken:  httpResp["accessToken"].(string),
 		AccessExpire: httpResp["accessExpire"].(int64),
 	}, nil
-	// TODO 如果中台创建用户成功但是下游服务初始化用户失败，怎么办。给登录也包一层，来补偿这种下游服务注册失败的情况
+	// 如果中台创建用户成功但是下游服务初始化用户失败，怎么办。给登录也包一层，来补偿这种下游服务注册失败的情况
 }
 
 // GetUserInfo 获取用户信息
@@ -102,7 +102,7 @@ func (s *UserService) SetUserInfo(ctx context.Context, req *core_api.SetUserInfo
 func (s *UserService) SignIn(ctx context.Context, req *core_api.SignUpReq) (*core_api.SignInResp, error) {
 	// 在中台登录账户
 	httpClient := util.NewHttpClient()
-	httpResp, err := httpClient.SignIn(req.AuthType, req.AuthId, *req.VerifyCode, *req.Password)
+	httpResp, err := httpClient.SignIn(req.AuthType, req.AuthId, req.VerifyCode, req.Password)
 	if err != nil {
 		return nil, err
 	}
