@@ -53,7 +53,7 @@ func (s *UserService) SignUp(ctx context.Context, req *core_api.SignUpReq) (*cor
 	return &core_api.SignUpResp{
 		UserId:       userId,
 		AccessToken:  httpResp["accessToken"].(string),
-		AccessExpire: httpResp["accessExpire"].(int64),
+		AccessExpire: int64(httpResp["accessExpire"].(float64)),
 	}, nil
 	// 如果中台创建用户成功但是下游服务初始化用户失败，怎么办。给登录也包一层，来补偿这种下游服务注册失败的情况
 }
@@ -135,6 +135,6 @@ func (s *UserService) SignIn(ctx context.Context, req *core_api.SignUpReq) (*cor
 	return &core_api.SignInResp{
 		UserId:       userId,
 		AccessToken:  httpResp["accessToken"].(string),
-		AccessExpire: httpResp["accessExpire"].(int64),
+		AccessExpire: int64(httpResp["accessExpire"].(float64)),
 	}, nil
 }
