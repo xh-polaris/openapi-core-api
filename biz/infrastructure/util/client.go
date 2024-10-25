@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 	"io"
 	"log"
@@ -13,6 +14,7 @@ import (
 // HttpClient 是一个简单的 HTTP 客户端
 type HttpClient struct {
 	Client *http.Client
+	Config *config.Config
 }
 
 // NewHttpClient 创建一个新的 HttpClient 实例
@@ -111,7 +113,12 @@ func (c *HttpClient) SignIn(authType string, authId string, verifyCode string, p
 	header["Content-Type"] = consts.ContentTypeJson
 	header["Charset"] = consts.CharSetUTF8
 
-	resp, err := c.SendRequest(consts.Get, consts.PlatformUrl, header, body)
+	// 如果是测试环境则向测试环境的中台发送请求
+	if config.GetConfig().Mode == "test" {
+		header["X-Xh-Env"] = "test"
+	}
+
+	resp, err := c.SendRequest(consts.Post, consts.PlatformUrl, header, body)
 	if err != nil {
 		return nil, err
 	}
