@@ -22,5 +22,5 @@ var OpenapiUserSet = wire.NewSet(
 )
 
 func NewOpenapiUser(config *config.Config) user.Client {
-	return client.NewClient(config.Name, "openapi.charge", user.NewClient)
+	return client.NewClient(config.Name, "openapi.user", user.NewClient)
 }
