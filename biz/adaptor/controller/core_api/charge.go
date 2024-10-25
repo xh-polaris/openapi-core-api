@@ -9,7 +9,7 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	core_api "github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
+	"github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
 	constsx "github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 )
 
@@ -179,6 +179,22 @@ func DeleteFullInterface(ctx context.Context, c *app.RequestContext) {
 
 	p := provider.Get()
 	resp, err := p.ChargeService.DeleteFullInterface(ctx, &req)
+	adaptor.PostProcess(ctx, c, &req, resp, err)
+}
+
+// BuyFullInterface .
+// @router /full/buy [POST]
+func BuyFullInterface(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req core_api.BuyFullInterfaceReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	p := provider.Get()
+	resp, err := p.ChargeService.BuyFullInterface(ctx, &req)
 	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
 

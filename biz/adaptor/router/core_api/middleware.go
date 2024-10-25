@@ -155,3 +155,8 @@ func _signinMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _buyfullinterfaceMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

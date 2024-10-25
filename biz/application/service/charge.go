@@ -4,13 +4,17 @@ import (
 	"context"
 	"github.com/google/wire"
 	"github.com/jinzhu/copier"
+	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
 	"github.com/xh-polaris/openapi-core-api/biz/application/dto/basic"
 	"github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/charge"
 	"github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_charge"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/util"
 	genbasic "github.com/xh-polaris/service-idl-gen-go/kitex_gen/basic"
 	gencharge "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/charge"
+	genuser "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
 )
 
 type IChargeService interface {
@@ -22,6 +26,7 @@ type IChargeService interface {
 	UpdateFullInterface(ctx context.Context, req *core_api.UpdateFullInterfaceReq) (*core_api.Response, error)
 	UpdateMargin(ctx context.Context, req *core_api.UpdateMarginReq) (*core_api.Response, error)
 	DeleteFullInterface(ctx context.Context, req *core_api.DeleteFullInterfaceReq) (*core_api.Response, error)
+	BuyFullInterface(ctx context.Context, req *core_api.BuyFullInterfaceReq) (*core_api.Response, error)
 	GetFullInterfaces(ctx context.Context, req *core_api.GetFullInterfacesReq) (*core_api.GetFullInterfacesResp, error)
 	CreateGradient(ctx context.Context, req *core_api.CreateGradientReq) (*core_api.Response, error)
 	UpdateGradient(ctx context.Context, req *core_api.UpdateGradientReq) (*core_api.Response, error)
@@ -30,6 +35,7 @@ type IChargeService interface {
 
 type ChargeService struct {
 	ChargeClient openapi_charge.IOpenapiCharge
+	UserClient   openapi_user.IOpenapiUser
 }
 
 var ChargeServiceSet = wire.NewSet(
@@ -88,6 +94,96 @@ func (s *ChargeService) DeleteBaseInterface(ctx context.Context, req *core_api.D
 	}
 	// 删除成功
 	return util.SuccessResponse(resp)
+}
+
+func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyFullInterfaceReq) (*core_api.Response, error) {
+	// 获取用户信息
+	userMeta := adaptor.ExtractUserMeta(ctx)
+	if userMeta.GetUserId() == "" {
+		return nil, consts.ErrNotAuthentication
+	}
+	userId := userMeta.GetUserId()
+	increment := req.Increment
+	infId := req.FullInterfaceId
+	isDiscount := req.Discount
+
+	// 根据id获取完整接口，未买过则拿到模板，买过则拿到用户的完整接口
+	getResp, err := s.ChargeClient.GetOneFullInterface(ctx, &gencharge.GetOneFullInterfaceReq{
+		Id: infId,
+	})
+	if err != nil || getResp == nil || getResp.Inf == nil {
+		return util.FailResponse(nil, "未获取到模板，购买失败，请重试"), err
+	}
+	fullInf := getResp.Inf
+	fullInfId := fullInf.Id
+	// 判断之前是否购买过，若没有则创建新的fullInterface
+	if fullInf.UserId == "0" || fullInf.UserId == "-1" {
+		creatResp, creatErr := s.ChargeClient.CreateFullInterface(ctx, &gencharge.CreateFullInterfaceReq{
+			BaseInterfaceId: fullInf.BaseInterfaceId,
+			UserId:          userId,
+			ChargeType:      fullInf.ChargeType,
+			Price:           fullInf.Price,
+			Margin:          0,
+		})
+		if creatResp == nil || creatErr != nil || creatResp.Done == false {
+			return util.FailResponse(creatResp, "创建full失败，购买失败，请重试"), creatErr
+		}
+		fullInfId = creatResp.FullInterfaceId
+	}
+
+	// 计算总额
+	var amount int64
+	amount = increment * fullInf.Price
+
+	// 判断是否折扣
+	if isDiscount {
+		// 获取梯度折扣
+		gradientsResp, gradientErr := s.ChargeClient.GetGradient(ctx, &gencharge.GetGradientReq{
+			BaseInterfaceId: fullInf.BaseInterfaceId,
+		})
+		// 未获取到梯度折扣
+		if gradientErr != nil || gradientsResp == nil || gradientsResp.Gradient == nil {
+			return util.FailResponse(nil, "获取折扣失败，请重新购买"), gradientErr
+		}
+		// 选取折扣
+		gradients := gradientsResp.Gradient
+
+		// 判断折扣是否可用
+		if gradients.Status != 0 {
+			return util.FailResponse(nil, "折扣暂不可用，购买失败"), err
+		}
+		var rate int64
+		rate = 100
+		for _, discount := range gradients.Discounts {
+			if increment > discount.Low {
+				rate = discount.Rate
+			}
+		}
+		amount = amount * rate / 100
+	}
+
+	// 扣除用户余额
+	remainResp, err := s.UserClient.SetRemain(ctx, &genuser.SetRemainReq{
+		UserId:    userId,
+		Increment: -1 * amount,
+	})
+	if err != nil || remainResp == nil {
+		return util.FailResponse(remainResp, "余额扣除失败，请重新购买"), err
+	}
+
+	// 增加接口余量
+	marginResp, err := s.UpdateMargin(ctx, &core_api.UpdateMarginReq{
+		Id:        fullInfId,
+		Increment: increment,
+	})
+	if err != nil || !marginResp.Done {
+		return util.FailResponse(marginResp, "接口余量增加失败"), err
+	}
+
+	return &core_api.Response{
+		Done: true,
+		Msg:  "购买接口成功",
+	}, nil
 }
 
 func (s *ChargeService) GetBaseInterfaces(ctx context.Context, req *core_api.GetBaseInterfacesReq) (*core_api.GetBaseInterfacesResp, error) {

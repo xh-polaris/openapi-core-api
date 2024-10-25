@@ -30,6 +30,7 @@ func Register(r *server.Hertz) {
 	}
 	{
 		_full := root.Group("/full", _fullMw()...)
+		_full.POST("/buy", append(_buyfullinterfaceMw(), core_api.BuyFullInterface)...)
 		_full.POST("/create", append(_createfullinterfaceMw(), core_api.CreateFullInterface)...)
 		_full.GET("/delete", append(_deletefullinterfaceMw(), core_api.DeleteFullInterface)...)
 		_full.GET("/get", append(_getfullinterfacesMw(), core_api.GetFullInterfaces)...)
