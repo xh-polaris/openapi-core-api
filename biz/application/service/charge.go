@@ -194,7 +194,6 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	if updateMarginErr != nil || !updateMarginResp.Done {
 		return util.FailResponse(updateMarginResp, "接口余量增加失败"), err
 	}
-	fmt.Printf("updateMarginResp: %+v\n", updateMarginResp.String())
 
 	return &core_api.Response{
 		Done: true,
