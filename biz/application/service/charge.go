@@ -108,6 +108,10 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	infId := req.FullInterfaceId
 	isDiscount := req.Discount
 
+	if s.ChargeClient == nil {
+		fmt.Printf("ChargeClient is Nil")
+	}
+
 	// 根据id获取完整接口
 	getResp, getErr := s.ChargeClient.GetOneFullInterface(ctx, &gencharge.GetOneFullInterfaceReq{
 		Id: infId,
@@ -126,6 +130,9 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 
 	// 之前没有购买过，则创建用户的接口余量
 	if marginErr != nil || marginResp == nil || marginResp.Margin == nil {
+		if s.ChargeClient == nil {
+			fmt.Printf("ChargeClient is Nil")
+		}
 		createMarginResp, createMarginErr := s.ChargeClient.CreateMargin(ctx, &gencharge.CreateMarginReq{
 			UserId:          userId,
 			FullInterfaceId: fullInfId,
