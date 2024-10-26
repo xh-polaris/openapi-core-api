@@ -136,8 +136,9 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 			return util.FailResponse(createMarginResp, "创建接口余量失败，购买失败，请重试"), createMarginErr
 		}
 		marginId = createMarginResp.MarginId
+	} else {
+		marginId = marginResp.Margin.Id
 	}
-	marginId = marginResp.Margin.Id
 
 	// 计算总额
 	var amount int64
