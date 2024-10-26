@@ -35,6 +35,7 @@ func NewProvider() (*Provider, error) {
 	}
 	chargeService := service.ChargeService{
 		ChargeClient: openapiCharge,
+		UserClient:   openapiUser,
 	}
 	keyService := service.KeyService{
 		KeyClient: openapiUser,
