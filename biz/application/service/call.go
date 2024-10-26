@@ -111,10 +111,23 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 		}, consts.ErrUnavailableInterface
 	}
 
+	// 获取接口余额
+	marginResp, err := s.ChargeClient.GetMargin(ctx, &gencharge.GetMarginReq{
+		UserId:          keyResp.UserId,
+		FullInterfaceId: interfaceResp.Id,
+	})
+	if err != nil || marginResp == nil {
+		return &core_api.CallInterfaceResp{
+			Code:   consts.GetMarginErrCode,
+			Msg:    consts.GetMarginErr,
+			Result: "获取余额失败",
+		}, consts.ErrMargin
+	}
+
 	// 根据接口信息计算调用用量count
 	count := calculateCount(interfaceResp.ChargeType, req.Params)
 
-	if count*interfaceResp.Price > interfaceResp.Margin {
+	if count*interfaceResp.Price > marginResp.Margin.Margin {
 		return &core_api.CallInterfaceResp{
 			Code:   998,
 			Msg:    consts.UnSufficientMargin,
@@ -128,6 +141,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 	// 调用失败
 	if err != nil || resp == nil {
 		logResp, err2 := s.ChargeClient.CreateLog(ctx, &gencharge.CreateLogReq{
+			MarginId:        marginResp.Margin.Id,
 			FullInterfaceId: interfaceResp.Id,
 			UserId:          interfaceResp.UserId,
 			KeyId:           keyResp.Id,
@@ -137,7 +151,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 			Timestamp:       timestamp,
 		})
 		if err2 != nil || logResp.Done == false {
-			log.Error("扣费失败,FullInterfaceId:%s,单价price:%d,计量count:%d", interfaceResp.Id, interfaceResp.Price, count)
+			log.Error("记录失败,用户余量id:%s,FullInterfaceId:%s,单价price:%d,计量count:%d", marginResp.Margin.Id, interfaceResp.Id, interfaceResp.Price, count)
 		}
 
 		return &core_api.CallInterfaceResp{
@@ -150,6 +164,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 
 	// 调用成功
 	logResp, err := s.ChargeClient.CreateLog(ctx, &gencharge.CreateLogReq{
+		MarginId:        marginResp.Margin.Id,
 		FullInterfaceId: interfaceResp.Id,
 		UserId:          interfaceResp.UserId,
 		KeyId:           keyResp.Id,

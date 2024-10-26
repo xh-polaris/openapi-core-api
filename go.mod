@@ -12,7 +12,7 @@ require (
 	github.com/jinzhu/copier v0.3.5
 	github.com/xh-polaris/gopkg v0.0.0-20231209130217-cd07835dcd83
 	github.com/xh-polaris/meowchat-core-api v1.0.78
-	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241025051903-37040b10fa7f
+	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241026064132-cbe4af6324bf
 	github.com/zeromicro/go-zero v1.7.2
 	go.opentelemetry.io/contrib/propagators/b3 v1.17.0
 	go.opentelemetry.io/otel v1.24.0

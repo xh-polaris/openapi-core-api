@@ -11,6 +11,8 @@ const (
 
 // msg & code
 const (
+	GetMarginErrCode         = 997
+	GetMarginErr             = "获取余额失败"
 	UnSufficientMarginCode   = 998
 	UnSufficientMargin       = "余额不足"
 	CallErrorCode            = 999

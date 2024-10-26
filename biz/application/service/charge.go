@@ -107,28 +107,32 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	infId := req.FullInterfaceId
 	isDiscount := req.Discount
 
-	// 根据id获取完整接口，未买过则拿到模板，买过则拿到用户的完整接口
-	getResp, err := s.ChargeClient.GetOneFullInterface(ctx, &gencharge.GetOneFullInterfaceReq{
+	// 根据id获取完整接口
+	getResp, getErr := s.ChargeClient.GetOneFullInterface(ctx, &gencharge.GetOneFullInterfaceReq{
 		Id: infId,
 	})
-	if err != nil || getResp == nil || getResp.Inf == nil {
-		return util.FailResponse(nil, "未获取到模板，购买失败，请重试"), err
+	if getErr != nil || getResp == nil || getResp.Inf == nil {
+		return util.FailResponse(nil, "未获取到模板，购买失败，请重试"), getErr
 	}
 	fullInf := getResp.Inf
 	fullInfId := fullInf.Id
-	// 判断之前是否购买过，若没有则创建新的fullInterface
-	if fullInf.UserId == "0" || fullInf.UserId == "-1" {
-		creatResp, creatErr := s.ChargeClient.CreateFullInterface(ctx, &gencharge.CreateFullInterfaceReq{
-			BaseInterfaceId: fullInf.BaseInterfaceId,
+
+	// 根据完整接口和用户id获取接口余量信息
+	marginResp, marginErr := s.ChargeClient.GetMargin(ctx, &gencharge.GetMarginReq{
+		UserId:          userId,
+		FullInterfaceId: fullInfId,
+	})
+
+	// 之前没有购买过，则创建用户的接口余量
+	if marginErr != nil || marginResp == nil || marginResp.Margin == nil {
+		createMarginResp, createMarginErr := s.ChargeClient.CreateMargin(ctx, &gencharge.CreateMarginReq{
 			UserId:          userId,
-			ChargeType:      fullInf.ChargeType,
-			Price:           fullInf.Price,
+			FullInterfaceId: fullInfId,
 			Margin:          0,
 		})
-		if creatResp == nil || creatErr != nil || creatResp.Done == false {
-			return util.FailResponse(creatResp, "创建full失败，购买失败，请重试"), creatErr
+		if createMarginErr != nil || createMarginResp == nil {
+			return util.FailResponse(createMarginResp, "创建接口余量失败，购买失败，请重试"), createMarginErr
 		}
-		fullInfId = creatResp.FullInterfaceId
 	}
 
 	// 计算总额
@@ -150,7 +154,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 
 		// 判断折扣是否可用
 		if gradients.Status != 0 {
-			return util.FailResponse(nil, "折扣暂不可用，购买失败"), err
+			return util.FailResponse(nil, "折扣暂不可用，购买失败"), nil
 		}
 		var rate int64
 		rate = 100
@@ -172,12 +176,12 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	}
 
 	// 增加接口余量
-	marginResp, err := s.UpdateMargin(ctx, &core_api.UpdateMarginReq{
+	updateMarginResp, err := s.UpdateMargin(ctx, &core_api.UpdateMarginReq{
 		Id:        fullInfId,
 		Increment: increment,
 	})
-	if err != nil || !marginResp.Done {
-		return util.FailResponse(marginResp, "接口余量增加失败"), err
+	if err != nil || !updateMarginResp.Done {
+		return util.FailResponse(updateMarginResp, "接口余量增加失败"), err
 	}
 
 	return &core_api.Response{
@@ -230,7 +234,6 @@ func (s *ChargeService) CreateFullInterface(ctx context.Context, req *core_api.C
 		UserId:          req.UserId,
 		ChargeType:      gencharge.ChargeType(req.ChargeType),
 		Price:           req.Price,
-		Margin:          req.Margin,
 	})
 	// 创建失败
 	if err != nil || resp.Done == false {
