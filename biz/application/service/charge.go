@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/google/wire"
 	"github.com/jinzhu/copier"
 	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
@@ -108,10 +107,6 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	infId := req.FullInterfaceId
 	isDiscount := req.Discount
 
-	if s.ChargeClient == nil {
-		fmt.Printf("ChargeClient is Nil")
-	}
-
 	// 根据id获取完整接口
 	getResp, getErr := s.ChargeClient.GetOneFullInterface(ctx, &gencharge.GetOneFullInterfaceReq{
 		Id: infId,
@@ -122,6 +117,8 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	fullInf := getResp.Inf
 	fullInfId := fullInf.Id
 
+	var marginId string
+
 	// 根据完整接口和用户id获取接口余量信息
 	marginResp, marginErr := s.ChargeClient.GetMargin(ctx, &gencharge.GetMarginReq{
 		UserId:          userId,
@@ -130,9 +127,6 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 
 	// 之前没有购买过，则创建用户的接口余量
 	if marginErr != nil || marginResp == nil || marginResp.Margin == nil {
-		if s.ChargeClient == nil {
-			fmt.Printf("ChargeClient is Nil")
-		}
 		createMarginResp, createMarginErr := s.ChargeClient.CreateMargin(ctx, &gencharge.CreateMarginReq{
 			UserId:          userId,
 			FullInterfaceId: fullInfId,
@@ -141,7 +135,9 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 		if createMarginErr != nil || createMarginResp == nil {
 			return util.FailResponse(createMarginResp, "创建接口余量失败，购买失败，请重试"), createMarginErr
 		}
+		marginId = createMarginResp.MarginId
 	}
+	marginId = marginResp.Margin.Id
 
 	// 计算总额
 	var amount int64
@@ -175,10 +171,6 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 		amount = amount * rate / 100
 	}
 
-	if s.UserClient == nil {
-		fmt.Printf("UserClient is Nil")
-	}
-
 	// 扣除用户余额
 	remainResp, err := s.UserClient.SetRemain(ctx, &genuser.SetRemainReq{
 		UserId:    userId,
@@ -190,7 +182,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 
 	// 增加接口余量
 	updateMarginResp, err := s.UpdateMargin(ctx, &core_api.UpdateMarginReq{
-		Id:        fullInfId,
+		Id:        marginId,
 		Increment: increment,
 	})
 	if err != nil || !updateMarginResp.Done {
