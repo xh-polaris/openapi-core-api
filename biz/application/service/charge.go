@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/google/wire"
 	"github.com/jinzhu/copier"
 	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
@@ -114,6 +115,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	if getErr != nil || getResp == nil || getResp.Inf == nil {
 		return util.FailResponse(nil, "未获取到模板，购买失败，请重试"), getErr
 	}
+	fmt.Printf("getResp  " + getResp.String())
 	fullInf := getResp.Inf
 	fullInfId := fullInf.Id
 
@@ -135,8 +137,10 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 		if createMarginErr != nil || createMarginResp == nil {
 			return util.FailResponse(createMarginResp, "创建接口余量失败，购买失败，请重试"), createMarginErr
 		}
+		fmt.Printf("createMarginResp: %+v\n", createMarginResp.String())
 		marginId = createMarginResp.MarginId
 	} else {
+		fmt.Println(marginResp.String())
 		marginId = marginResp.Margin.Id
 	}
 
@@ -180,6 +184,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	if err != nil || remainResp == nil {
 		return util.FailResponse(remainResp, "余额扣除失败，请重新购买"), err
 	}
+	fmt.Printf("remainResp: %+v\n", remainResp.String())
 
 	// 增加接口余量
 	updateMarginResp, err := s.UpdateMargin(ctx, &core_api.UpdateMarginReq{
@@ -189,6 +194,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	if err != nil || !updateMarginResp.Done {
 		return util.FailResponse(updateMarginResp, "接口余量增加失败"), err
 	}
+	fmt.Printf("updateMarginResp: %+v\n", updateMarginResp.String())
 
 	return &core_api.Response{
 		Done: true,
