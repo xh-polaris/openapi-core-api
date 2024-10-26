@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/google/wire"
 	"github.com/jinzhu/copier"
 	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
@@ -137,6 +138,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 
 	// 计算总额
 	var amount int64
+	amount = 0
 	amount = increment * fullInf.Price
 
 	// 判断是否折扣
@@ -164,6 +166,10 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 			}
 		}
 		amount = amount * rate / 100
+	}
+
+	if s.UserClient == nil {
+		fmt.Printf("UserClient is Nil")
 	}
 
 	// 扣除用户余额
