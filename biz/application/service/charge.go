@@ -187,11 +187,11 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	fmt.Printf("remainResp: %+v\n", remainResp.String())
 
 	// 增加接口余量
-	updateMarginResp, err := s.UpdateMargin(ctx, &core_api.UpdateMarginReq{
+	updateMarginResp, updateMarginErr := s.UpdateMargin(ctx, &core_api.UpdateMarginReq{
 		Id:        marginId,
 		Increment: increment,
 	})
-	if err != nil || !updateMarginResp.Done {
+	if updateMarginErr != nil || !updateMarginResp.Done {
 		return util.FailResponse(updateMarginResp, "接口余量增加失败"), err
 	}
 	fmt.Printf("updateMarginResp: %+v\n", updateMarginResp.String())
