@@ -2,6 +2,8 @@ package adaptor
 
 import (
 	"context"
+	"fmt"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
 	genuser "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
 )
@@ -10,7 +12,9 @@ var rm *RightsManager
 
 func CheckRole(ctx context.Context, role string) bool {
 	if rm == nil {
-		rm = &RightsManager{}
+		rm = &RightsManager{
+			UserClient: openapi_user.NewOpenapiUser(config.GetConfig()),
+		}
 	}
 	switch role {
 	case "admin":
@@ -27,8 +31,11 @@ type RightsManager struct {
 
 func (m *RightsManager) AdminOnly(ctx context.Context) bool {
 	userMeta := ExtractUserMeta(ctx)
-	if userMeta.GetUserId() == "" {
+	if userMeta == nil || userMeta.GetUserId() == "" {
 		return false
+	}
+	if m.UserClient == nil {
+		fmt.Printf("nil")
 	}
 	resp, err := m.UserClient.GetUserInfo(ctx, &genuser.GetUserInfoReq{
 		UserId: userMeta.UserId,
