@@ -7,6 +7,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
@@ -39,20 +40,15 @@ func getHostOrIP(c *app.RequestContext) string {
 func getSignature(c *app.RequestContext) string {
 	data := make([]byte, 0)
 
-	// 获取请求的 method、url、header 和 body
-	method := c.Request.Method()
-	data = append(data, method...)
-
-	url := c.Request.Path() // 获取请求的路径
-	data = append(data, url...)
-
 	headers := c.Request.Header.Header()
 	headerLines := bytes.Split(headers, []byte("\r\n"))
-	for _, line := range headerLines {
+	for cnt, line := range headerLines {
 		// 忽略大小写检查是否是 Signature 字段
-		if !bytes.Contains(line, []byte("signature")) {
+		if !bytes.Contains(line, []byte("Signature")) {
 			data = append(data, line...)
-			data = append(data, []byte("\r\n")...) // 确保行之间有换行
+			if cnt != len(headerLines)-1 {
+				data = append(data, []byte("\r\n")...) // 确保行之间有换行
+			}
 		}
 	}
 
@@ -63,6 +59,8 @@ func getSignature(c *app.RequestContext) string {
 	hash := sha256.New()
 	hash.Write(data)
 	signature := hex.EncodeToString(hash.Sum(nil))
+
+	fmt.Println("signature:", signature)
 
 	return signature
 }
