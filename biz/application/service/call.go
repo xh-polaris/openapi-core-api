@@ -93,6 +93,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 		Url:    url,
 		Method: method,
 		UserId: keyResp.UserId,
+		Role:   int64(keyResp.Role),
 	})
 	if err != nil {
 		return &core_api.CallInterfaceResp{
@@ -103,7 +104,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 	}
 
 	//  校验接口的可用性
-	if interfaceResp.BaseInterfaceStatus != 0 || interfaceResp.Status != 0 || interfaceResp.UserId != keyResp.UserId {
+	if interfaceResp.BaseInterfaceStatus != 0 || interfaceResp.Status != 0 {
 		return &core_api.CallInterfaceResp{
 			Code:   consts.UnavailableInterfaceCode,
 			Msg:    consts.UnavailableInterface,
@@ -195,7 +196,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 
 func checkTimestamp(timestamp int64, now time.Time) bool {
 	diff := now.Unix() - timestamp
-	if diff > config.GetConfig().TimeThreshold {
+	if diff < config.GetConfig().TimeThreshold {
 		return true
 	}
 	return false

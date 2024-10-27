@@ -411,6 +411,8 @@ github.com/xh-polaris/service-idl-gen-go v0.0.0-20241026055556-311ebe835bce h1:W
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241026055556-311ebe835bce/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241026064132-cbe4af6324bf h1:RWlPZJlbL/0OvnUUmlcRa+iUB8wt7cqLzNBcvAVkyF0=
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241026064132-cbe4af6324bf/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
+github.com/xh-polaris/service-idl-gen-go v0.0.0-20241027130040-251144f1e9db h1:Jk5ZulsiDoce1aeoEicOYRGl65pecnaj+Y5RqrobbWc=
+github.com/xh-polaris/service-idl-gen-go v0.0.0-20241027130040-251144f1e9db/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
