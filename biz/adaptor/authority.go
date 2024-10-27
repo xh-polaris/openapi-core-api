@@ -34,14 +34,12 @@ func (m *RightsManager) AdminOnly(ctx context.Context) bool {
 	if userMeta == nil || userMeta.GetUserId() == "" {
 		return false
 	}
-	if m.UserClient == nil {
-		fmt.Printf("nil")
-	}
 	resp, err := m.UserClient.GetUserInfo(ctx, &genuser.GetUserInfoReq{
 		UserId: userMeta.UserId,
 	})
-	if err != nil || resp.Role != genuser.Role_ADMIN {
+	if err != nil || resp == nil || resp.Role != genuser.Role_ADMIN {
 		return false
 	}
+	fmt.Printf(resp.String())
 	return true
 }
