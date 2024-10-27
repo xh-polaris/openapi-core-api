@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
 	genuser "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
 )
@@ -17,7 +18,7 @@ func CheckRole(ctx context.Context, role string) bool {
 		}
 	}
 	switch role {
-	case "admin":
+	case consts.Admin:
 		return rm.AdminOnly(ctx)
 	default:
 		return true

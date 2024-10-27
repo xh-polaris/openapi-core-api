@@ -225,6 +225,12 @@ func CreateGradient(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	// 权限校验
+	if adaptor.CheckRole(ctx, constsx.Admin) {
+		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
+		return
+	}
+
 	p := provider.Get()
 	resp, err := p.ChargeService.CreateGradient(ctx, &req)
 	adaptor.PostProcess(ctx, c, &req, resp, err)
