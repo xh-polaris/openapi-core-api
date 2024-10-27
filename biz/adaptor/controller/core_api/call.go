@@ -3,6 +3,7 @@
 package core_api
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
@@ -36,16 +37,26 @@ func getHostOrIP(c *app.RequestContext) string {
 }
 
 func getSignature(c *app.RequestContext) string {
+	data := make([]byte, 0)
+
 	// 获取请求的 method、url、header 和 body
 	method := c.Request.Method()
-	url := c.Request.Path() // 获取请求的路径
-	headers := c.Request.Header.Header()
-	body := c.Request.Body()
-
-	data := make([]byte, 0)
 	data = append(data, method...)
+
+	url := c.Request.Path() // 获取请求的路径
 	data = append(data, url...)
-	data = append(data, headers...)
+
+	headers := c.Request.Header.Header()
+	headerLines := bytes.Split(headers, []byte("\r\n"))
+	for _, line := range headerLines {
+		// 忽略大小写检查是否是 Signature 字段
+		if !bytes.Contains(line, []byte("signature")) {
+			data = append(data, line...)
+			data = append(data, []byte("\r\n")...) // 确保行之间有换行
+		}
+	}
+
+	body := c.Request.Body()
 	data = append(data, body...)
 
 	// 计算 SHA256 签名
