@@ -14,7 +14,7 @@ const (
 	GetMarginErrCode         = 997
 	GetMarginErr             = "获取余额失败"
 	UnSufficientMarginCode   = 998
-	UnSufficientMargin       = "余额不足"
+	UnSufficientMargin       = "余量不足"
 	CallErrorCode            = 999
 	CallError                = "调用失败"
 	RPCErrorCode             = 1000
