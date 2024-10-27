@@ -223,7 +223,7 @@ func call(method string, url string, params map[string]interface{}) (map[string]
 	headers["Content-Type"] = "application/json"
 
 	client := util.NewHttpClient()
-	resp, err := client.SendRequest(method, url, headers, params)
+	resp, err := client.SendRequest(method, "https://"+url, headers, params)
 	if err != nil {
 		return nil, err
 	}
