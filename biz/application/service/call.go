@@ -128,7 +128,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 	// 根据接口信息计算调用用量count
 	count := calculateCount(interfaceResp.ChargeType, req.Params)
 
-	if marginEnough(interfaceResp.ChargeType, count, interfaceResp.Price, marginResp.Margin.Margin) {
+	if !marginEnough(interfaceResp.ChargeType, count, interfaceResp.Price, marginResp.Margin.Margin) {
 		return &core_api.CallInterfaceResp{
 			Code:   998,
 			Msg:    consts.UnSufficientMargin,
