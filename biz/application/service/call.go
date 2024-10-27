@@ -196,7 +196,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 
 func checkTimestamp(timestamp int64, now time.Time) bool {
 	diff := now.Unix() - timestamp
-	if diff < config.GetConfig().TimeThreshold {
+	if diff > config.GetConfig().TimeThreshold {
 		return true
 	}
 	return false
