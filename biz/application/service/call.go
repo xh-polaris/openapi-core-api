@@ -14,6 +14,7 @@ import (
 	gencharge "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/charge"
 	genuser "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
 	"time"
+	"unicode/utf8"
 )
 
 type ICallService interface {
@@ -206,7 +207,7 @@ func calculateCount(chargeType int64, params string) int64 {
 	if chargeType == 0 { // 按次计费
 		return 1
 	}
-	return int64(len(params))
+	return int64(utf8.RuneCountInString(params))
 }
 
 func marginEnough(chargeType int64, count int64, price int64, margin int64) bool {
