@@ -215,7 +215,7 @@ func marginEnough(chargeType int64, count int64, price int64, margin int64) bool
 		return margin >= count
 	}
 	// 计量，比较剩余用量
-	return margin >= count*price
+	return margin >= count
 }
 
 func call(method string, url string, params map[string]interface{}) (map[string]interface{}, error) {
