@@ -3,7 +3,6 @@
 package core_api
 
 import (
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
@@ -12,9 +11,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
 	core_api "github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
-	constsx "github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 	"github.com/xh-polaris/openapi-core-api/provider"
-	"strings"
 )
 
 // CallInterface .
@@ -42,18 +39,18 @@ func getHostOrIP(c *app.RequestContext) string {
 func getSignature(c *app.RequestContext) string {
 	data := make([]byte, 0)
 
-	headers := c.Request.Header.Header()
-	headerLines := bytes.Split(headers, []byte("\r\n"))
-	for cnt, line := range headerLines {
-		headerName := strings.Split(string(line), ":")[0]
-		// 排除Signature和网关添加的header
-		if !bytes.Contains(line, []byte("Signature")) && !constsx.FilteredHeaders[headerName] {
-			data = append(data, line...)
-			if cnt != len(headerLines)-1 {
-				data = append(data, []byte("\r\n")...) // 确保行之间有换行
-			}
-		}
-	}
+	//headers := c.Request.Header.Header()
+	//headerLines := bytes.Split(headers, []byte("\r\n"))
+	//for cnt, line := range headerLines {
+	//	headerName := strings.Split(string(line), ":")[0]
+	//	// 排除Signature和网关添加的header
+	//	if !bytes.Contains(line, []byte("Signature")) && !constsx.FilteredHeaders[headerName] {
+	//		data = append(data, line...)
+	//		if cnt != len(headerLines)-1 {
+	//			data = append(data, []byte("\r\n")...) // 确保行之间有换行
+	//		}
+	//	}
+	//}
 
 	body := c.Request.Body()
 	data = append(data, body...)
