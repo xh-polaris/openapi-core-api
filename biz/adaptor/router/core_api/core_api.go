@@ -21,7 +21,7 @@ func Register(r *server.Hertz) {
 		_base := root.Group("/base", _baseMw()...)
 		_base.POST("/create", append(_createbaseinterfaceMw(), core_api.CreateBaseInterface)...)
 		_base.GET("/delete", append(_deletebaseinterfaceMw(), core_api.DeleteBaseInterface)...)
-		_base.GET("/get", append(_getbaseinterfacesMw(), core_api.GetBaseInterfaces)...)
+		_base.POST("/get", append(_getbaseinterfacesMw(), core_api.GetBaseInterfaces)...)
 		_base.POST("/update", append(_updatebaseinterfaceMw(), core_api.UpdateBaseInterface)...)
 	}
 	{
@@ -33,7 +33,7 @@ func Register(r *server.Hertz) {
 		_full.POST("/buy", append(_buyfullinterfaceMw(), core_api.BuyFullInterface)...)
 		_full.POST("/create", append(_createfullinterfaceMw(), core_api.CreateFullInterface)...)
 		_full.GET("/delete", append(_deletefullinterfaceMw(), core_api.DeleteFullInterface)...)
-		_full.GET("/get", append(_getfullinterfacesMw(), core_api.GetFullInterfaces)...)
+		_full.POST("/get", append(_getfullinterfacesMw(), core_api.GetFullInterfaces)...)
 		_full.POST("/margin", append(_updatemarginMw(), core_api.UpdateMargin)...)
 		_full.POST("/update", append(_updatefullinterfaceMw(), core_api.UpdateFullInterface)...)
 	}
@@ -47,7 +47,7 @@ func Register(r *server.Hertz) {
 		_key := root.Group("/key", _keyMw()...)
 		_key.GET("/delete", append(_deletekeyMw(), core_api.DeleteKey)...)
 		_key.POST("/generate", append(_generatekeyMw(), core_api.GenerateKey)...)
-		_key.GET("/get", append(_getkeysMw(), core_api.GetKeys)...)
+		_key.POST("/get", append(_getkeysMw(), core_api.GetKeys)...)
 		_key.POST("/hosts", append(_updatehostsMw(), core_api.UpdateHosts)...)
 		_key.GET("/refresh", append(_refreshkeyMw(), core_api.RefreshKey)...)
 		_key.POST("/update", append(_updatekeyMw(), core_api.UpdateKey)...)
