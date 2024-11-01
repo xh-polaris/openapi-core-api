@@ -38,3 +38,11 @@ const (
 	Admin = "admin"
 	User  = "user"
 )
+
+var FilteredHeaders = map[string]bool{
+	"X-Real-Ip":         true,
+	"X-Forwarded-For":   true,
+	"X-Forwarded-Proto": true,
+	"X-Forwarded-Host":  true,
+	"X-Forwarded-Port":  true,
+}

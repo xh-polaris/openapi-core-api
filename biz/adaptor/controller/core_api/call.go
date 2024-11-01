@@ -12,7 +12,9 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
 	core_api "github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
+	constsx "github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 	"github.com/xh-polaris/openapi-core-api/provider"
+	"strings"
 )
 
 // CallInterface .
@@ -43,8 +45,9 @@ func getSignature(c *app.RequestContext) string {
 	headers := c.Request.Header.Header()
 	headerLines := bytes.Split(headers, []byte("\r\n"))
 	for cnt, line := range headerLines {
-		// 忽略大小写检查是否是 Signature 字段
-		if !bytes.Contains(line, []byte("Signature")) {
+		headerName := strings.Split(string(line), ":")[0]
+		// 排除Signature和网关添加的header
+		if !bytes.Contains(line, []byte("Signature")) && !constsx.FilteredHeaders[headerName] {
 			data = append(data, line...)
 			if cnt != len(headerLines)-1 {
 				data = append(data, []byte("\r\n")...) // 确保行之间有换行
