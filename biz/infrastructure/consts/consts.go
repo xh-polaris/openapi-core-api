@@ -45,4 +45,5 @@ var FilteredHeaders = map[string]bool{
 	"X-Forwarded-Proto": true,
 	"X-Forwarded-Host":  true,
 	"X-Forwarded-Port":  true,
+	"Content-Length":    true,
 }
