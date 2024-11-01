@@ -55,6 +55,8 @@ func getSignature(c *app.RequestContext) string {
 	body := c.Request.Body()
 	data = append(data, body...)
 
+	fmt.Println(string(data))
+
 	// 计算 SHA256 签名
 	hash := sha256.New()
 	hash.Write(data)
