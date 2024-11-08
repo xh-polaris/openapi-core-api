@@ -21,6 +21,7 @@ type Config struct {
 	ListenOn      string
 	TimeThreshold int64
 	Auth          Auth
+	Action        map[string]string
 }
 
 func NewConfig() (*Config, error) {

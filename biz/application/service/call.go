@@ -47,7 +47,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 	// 获取请求中的key内容、接口方法、签名、接口路由、调用时间戳
 	key := req.Key
 	method := req.Method
-	url := req.Url
+	url := s.Config.Action[req.Action]
 	timestamp := req.Timestamp
 	var params map[string]interface{}
 	err := json.Unmarshal([]byte(req.Params), &params)
@@ -129,7 +129,7 @@ func (s *CallService) CallInterface(ctx context.Context, req *core_api.CallInter
 	// 根据接口信息计算调用用量count
 	count := calculateCount(interfaceResp.ChargeType, req.Params)
 
-	if !marginEnough(interfaceResp.ChargeType, count, interfaceResp.Price, marginResp.Margin.Margin) {
+	if !marginEnough(interfaceResp.ChargeType, count, marginResp.Margin.Margin) {
 		return &core_api.CallInterfaceResp{
 			Code:   998,
 			Msg:    consts.UnSufficientMargin,
@@ -210,7 +210,7 @@ func calculateCount(chargeType int64, params string) int64 {
 	return int64(utf8.RuneCountInString(params))
 }
 
-func marginEnough(chargeType int64, count int64, price int64, margin int64) bool {
+func marginEnough(chargeType int64, count int64, margin int64) bool {
 	// 计次，比较剩余次数
 	if chargeType == 0 {
 		return margin >= count
