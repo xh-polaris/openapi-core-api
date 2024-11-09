@@ -16,6 +16,7 @@ import (
 	genbasic "github.com/xh-polaris/service-idl-gen-go/kitex_gen/basic"
 	gencharge "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/charge"
 	genuser "github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type IChargeService interface {
@@ -176,10 +177,13 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 		amount = amount * rate / 100
 	}
 
+	txId := primitive.NewObjectID().Hex() // 事务id
+
 	// 扣除用户余额
 	remainResp, err := s.UserClient.SetRemain(ctx, &genuser.SetRemainReq{
 		UserId:    userId,
 		Increment: -1 * amount,
+		TxId:      &txId,
 	})
 	if err != nil || remainResp == nil {
 		return util.FailResponse(remainResp, "余额扣除失败，请重新购买"), err
@@ -187,9 +191,10 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	fmt.Printf("remainResp: %+v\n", remainResp.String())
 
 	// 增加接口余量
-	updateMarginResp, updateMarginErr := s.UpdateMargin(ctx, &core_api.UpdateMarginReq{
+	updateMarginResp, updateMarginErr := s.ChargeClient.UpdateMargin(ctx, &gencharge.UpdateMarginReq{
 		Id:        marginId,
 		Increment: increment,
+		TxId:      &txId,
 	})
 	if updateMarginErr != nil || !updateMarginResp.Done {
 		return util.FailResponse(updateMarginResp, "接口余量增加失败"), err
