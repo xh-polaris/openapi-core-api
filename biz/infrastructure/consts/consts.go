@@ -48,3 +48,8 @@ var FilteredHeaders = map[string]bool{
 	"Content-Length":    true,
 	"X-Xh-Env":          true,
 }
+
+// mq
+const (
+	BuyTopic = "openapi_buy"
+)

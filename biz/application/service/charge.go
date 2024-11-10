@@ -10,6 +10,7 @@ import (
 	"github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/charge"
 	"github.com/xh-polaris/openapi-core-api/biz/application/dto/openapi/core_api"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/mq"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_charge"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/util"
@@ -147,7 +148,9 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 
 	// 计算总额
 	var amount int64
+	var rate int64
 	amount = 0
+	rate = 100
 	amount = increment * fullInf.Price
 
 	// 判断是否折扣
@@ -167,8 +170,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 		if gradients.Status != 0 {
 			return util.FailResponse(nil, "折扣暂不可用，购买失败"), nil
 		}
-		var rate int64
-		rate = 100
+
 		for _, discount := range gradients.Discounts {
 			if increment > discount.Low {
 				rate = discount.Rate
@@ -178,6 +180,12 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	}
 
 	txId := primitive.NewObjectID().Hex() // 事务id
+
+	// 给消息队列发送对账消息
+	err := mq.SendBuyMsg(txId, -1*amount, rate, increment, fullInf.Price)
+	if err != nil {
+		return util.FailResponse(nil, "消息发送失败"), err
+	}
 
 	// 扣除用户余额
 	remainResp, err := s.UserClient.SetRemain(ctx, &genuser.SetRemainReq{

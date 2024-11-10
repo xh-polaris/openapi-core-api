@@ -16,12 +16,17 @@ type Auth struct {
 	AccessExpire int64
 }
 
+type RocketMQ struct {
+	NameServers []string
+}
+
 type Config struct {
 	service.ServiceConf
 	ListenOn      string
 	TimeThreshold int64
 	Auth          Auth
 	Action        map[string]string
+	RocketMQ      RocketMQ
 }
 
 func NewConfig() (*Config, error) {
