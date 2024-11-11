@@ -46,6 +46,7 @@ func (pro *Producer) SendBuyMsg(txId string, amount int64, rate int64, increment
 
 	// 定义消息内容
 	var msgBody map[string]interface{}
+	msgBody = make(map[string]interface{})
 	msgBody["txId"] = txId           // 事务id
 	msgBody["rate"] = rate           // 折扣
 	msgBody["increment"] = increment // 接口余量增加量
