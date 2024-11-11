@@ -113,9 +113,10 @@ func (s *UserService) SignIn(ctx context.Context, req *core_api.SignUpReq) (*cor
 		UserId: userId,
 	})
 	// 获取失败
-	if err != nil {
+	if err != nil && !(err.Error() == "remote or network error[remote]: biz error: not found") {
 		return nil, err
 	}
+
 	// 先前用户初始化失败，补偿初始化
 	if info == nil || info.UserId == "" {
 		resp, err2 := s.UserClient.SignUp(ctx, &genuser.SignUpReq{

@@ -26,7 +26,7 @@ func NewProducer(config *config.Config) *Producer {
 func (pro *Producer) SendBuyMsg(txId string, amount int64, rate int64, increment int64, price int64) error {
 	// 创建一个Producer实例
 	p, err := rocketmq.NewProducer(
-		producer.WithNsResolver(mqprimitive.NewPassthroughResolver(pro.Config.RocketMQ.NameServers)),
+		producer.WithNameServer(pro.Config.RocketMQ.NameServers),
 		producer.WithRetry(2),
 	)
 	if err != nil {
