@@ -9,6 +9,7 @@ package provider
 import (
 	"github.com/xh-polaris/openapi-core-api/biz/application/service"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/mq"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_charge"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
 )
@@ -33,9 +34,11 @@ func NewProvider() (*Provider, error) {
 		UserClient:   openapiUser,
 		ChargeClient: openapiCharge,
 	}
+	producer := mq.NewProducer(configConfig)
 	chargeService := service.ChargeService{
 		ChargeClient: openapiCharge,
 		UserClient:   openapiUser,
+		Producer:     producer,
 	}
 	keyService := service.KeyService{
 		KeyClient: openapiUser,

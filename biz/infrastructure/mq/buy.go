@@ -11,10 +11,22 @@ import (
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 )
 
-func SendBuyMsg(txId string, amount int64, rate int64, increment int64, price int64) error {
+type IProducer interface {
+	SendBuyMsg(txId string, amount int64, rate int64, increment int64, price int64) error
+}
+
+type Producer struct {
+	Config *config.Config
+}
+
+func NewProducer(config *config.Config) *Producer {
+	return &Producer{Config: config}
+}
+
+func (pro *Producer) SendBuyMsg(txId string, amount int64, rate int64, increment int64, price int64) error {
 	// 创建一个Producer实例
 	p, err := rocketmq.NewProducer(
-		producer.WithNsResolver(mqprimitive.NewPassthroughResolver(config.GetConfig().RocketMQ.NameServers)),
+		producer.WithNsResolver(mqprimitive.NewPassthroughResolver(pro.Config.RocketMQ.NameServers)),
 		producer.WithRetry(2),
 	)
 	if err != nil {

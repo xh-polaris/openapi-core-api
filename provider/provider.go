@@ -4,6 +4,7 @@ import (
 	"github.com/google/wire"
 	"github.com/xh-polaris/openapi-core-api/biz/application/service"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/mq"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_charge"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
 )
@@ -48,9 +49,15 @@ var DomainSet = wire.NewSet()
 var InfrastructureSet = wire.NewSet(
 	config.NewConfig,
 	RPCSet,
+	MQSet,
+)
+
+var MQSet = wire.NewSet(
+	mq.NewProducer,
 )
 
 var AllProvider = wire.NewSet(
 	ApplicationSet,
 	DomainSet,
-	InfrastructureSet)
+	InfrastructureSet,
+)

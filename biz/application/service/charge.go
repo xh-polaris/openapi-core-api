@@ -39,6 +39,7 @@ type IChargeService interface {
 type ChargeService struct {
 	ChargeClient openapi_charge.IOpenapiCharge
 	UserClient   openapi_user.IOpenapiUser
+	Producer     *mq.Producer
 }
 
 var ChargeServiceSet = wire.NewSet(
@@ -182,7 +183,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	txId := primitive.NewObjectID().Hex() // 事务id
 
 	// 给消息队列发送对账消息
-	err := mq.SendBuyMsg(txId, -1*amount, rate, increment, fullInf.Price)
+	err := s.Producer.SendBuyMsg(txId, -1*amount, rate, increment, fullInf.Price)
 	if err != nil {
 		return util.FailResponse(nil, "消息发送失败"), err
 	}
