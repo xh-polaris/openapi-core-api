@@ -1,22 +1,34 @@
 package test
 
 import (
-	"fmt"
+	"context"
+	"testing"
+
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/mq"
-	"testing"
 )
 
 func TestMQ(t *testing.T) {
 	con := &config.Config{
-		RocketMQ: config.RocketMQ{
-			NameServers: []string{"namesrv.rocketmq"},
-		},
+		RabbitMqConf: config.RabbitMqConf{URL: "amqp://user:DEHjiFaLtrM6cJ5d@rabbitmq.rabbitmq:5672/"},
 	}
-	pro := mq.NewProducer(con)
-	err2 := pro.SendBuyMsg("test", 1, 1, 1, 1)
-	if err2 != nil {
-		fmt.Println(err2)
+	pro, err := mq.NewProducer(con)
+	if err != nil {
+		t.Error(err)
 		return
 	}
+	err = pro.SendBuyMsg(context.Background(), "test", 1, 1, 1, 1)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+}
+
+func TestConsumer(t *testing.T) {
+	con := &config.Config{
+		RabbitMqConf: config.RabbitMqConf{URL: "amqp://user:DEHjiFaLtrM6cJ5d@rabbitmq.rabbitmq:5672/"},
+	}
+	con.Name = "openapi.core-api"
+	c := mq.NewConsumer(con)
+	c.Start()
 }

@@ -4,6 +4,7 @@ package main
 
 import (
 	"context"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -12,12 +13,13 @@ import (
 	"github.com/hertz-contrib/obs-opentelemetry/tracing"
 	"github.com/xh-polaris/gopkg/hertz/middleware"
 	logx "github.com/xh-polaris/gopkg/util/log"
-	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
-	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/util/log"
-	"github.com/xh-polaris/openapi-core-api/provider"
 	"go.opentelemetry.io/contrib/propagators/b3"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
+
+	"github.com/xh-polaris/openapi-core-api/biz/adaptor"
+	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/util/log"
+	"github.com/xh-polaris/openapi-core-api/provider"
 )
 
 func Init() {

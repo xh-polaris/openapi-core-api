@@ -16,8 +16,8 @@ type Auth struct {
 	AccessExpire int64
 }
 
-type RocketMQ struct {
-	NameServers []string
+type RabbitMqConf struct {
+	URL string
 }
 
 type Config struct {
@@ -26,7 +26,7 @@ type Config struct {
 	TimeThreshold int64
 	Auth          Auth
 	Action        map[string]string
-	RocketMQ      RocketMQ
+	RabbitMqConf  RabbitMqConf
 }
 
 func NewConfig() (*Config, error) {
