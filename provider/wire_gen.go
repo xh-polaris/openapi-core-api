@@ -34,7 +34,10 @@ func NewProvider() (*Provider, error) {
 		UserClient:   openapiUser,
 		ChargeClient: openapiCharge,
 	}
-	producer := mq.NewProducer(configConfig)
+	producer, err := mq.NewProducer(configConfig)
+	if err != nil {
+		return nil, err
+	}
 	chargeService := service.ChargeService{
 		ChargeClient: openapiCharge,
 		UserClient:   openapiUser,

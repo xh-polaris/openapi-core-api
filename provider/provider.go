@@ -54,6 +54,7 @@ var InfrastructureSet = wire.NewSet(
 
 var MQSet = wire.NewSet(
 	mq.NewProducer,
+	mq.NewConsumer,
 )
 
 var AllProvider = wire.NewSet(
