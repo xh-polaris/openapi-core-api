@@ -183,7 +183,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	txId := primitive.NewObjectID().Hex() // 事务id
 
 	// 给消息队列发送对账消息
-	err := s.Producer.SendBuyMsg(txId, -1*amount, rate, increment, fullInf.Price)
+	err := s.Producer.SendBuyMsg(ctx, txId, -1*amount, rate, increment, fullInf.Price)
 	if err != nil {
 		return util.FailResponse(nil, "消息发送失败"), err
 	}
