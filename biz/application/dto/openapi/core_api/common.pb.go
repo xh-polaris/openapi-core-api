@@ -1924,8 +1924,8 @@ type GetAmountResp struct {
 	unknownFields protoimpl.UnknownFields
 
 	Rate         int64 `protobuf:"varint,1,opt,name=rate,proto3" form:"rate" json:"rate" query:"rate"`                                 // 折扣程度
-	OriginAmount int64 `protobuf:"varint,2,opt,name=originAmount,proto3" form:"originAmount" json:"originAmount" query:"originAmount"` // 原始价格
-	Amount       int64 `protobuf:"varint,3,opt,name=amount,proto3" form:"amount" json:"amount" query:"amount"`                         // 折后价格
+	OriginAmount int64 `protobuf:"varint,2,opt,name=originAmount,proto3" form:"originAmount" json:"originAmount" query:"originAmount"` // 原始价格，如果要扣除则一律给出负数
+	Amount       int64 `protobuf:"varint,3,opt,name=amount,proto3" form:"amount" json:"amount" query:"amount"`                         // 折后价格，如果要扣除则一律给出负数
 }
 
 func (x *GetAmountResp) Reset() {

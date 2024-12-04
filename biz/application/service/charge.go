@@ -34,6 +34,7 @@ type IChargeService interface {
 	CreateGradient(ctx context.Context, req *core_api.CreateGradientReq) (*core_api.Response, error)
 	UpdateGradient(ctx context.Context, req *core_api.UpdateGradientReq) (*core_api.Response, error)
 	GetGradient(ctx context.Context, req *core_api.GetGradientReq) (*core_api.GetGradientResp, error)
+	GetAmount(ctx context.Context, c *core_api.GetAmountReq) (*core_api.GetAmountResp, error)
 }
 
 type ChargeService struct {
@@ -354,6 +355,23 @@ func (s *ChargeService) GetGradient(ctx context.Context, req *core_api.GetGradie
 	}
 	return &core_api.GetGradientResp{
 		Gradient: gradient,
+	}, nil
+}
+
+func (s *ChargeService) GetAmount(ctx context.Context, req *core_api.GetAmountReq) (*core_api.GetAmountResp, error) {
+	baseInfId := req.BaseInfId
+	increment := req.Increment
+	amountResp, err := s.ChargeClient.GetAmount(ctx, &gencharge.GetAmountReq{
+		Increment: increment,
+		BaseInfId: baseInfId,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &core_api.GetAmountResp{
+		Rate:         amountResp.Amount,
+		OriginAmount: amountResp.OriginAmount,
+		Amount:       amountResp.Amount,
 	}, nil
 }
 

@@ -40,4 +40,5 @@ var (
 	ErrSignature            = NewErrno(codes.InvalidArgument, errors.New("signature invalid"))
 	ErrRole                 = NewErrno(codes.PermissionDenied, errors.New("没有权限"))
 	ErrMargin               = NewErrno(codes.Code(1002), errors.New("获取余额失败,请重试"))
+	ErrGradient             = NewErrno(codes.Code(1003), errors.New("获取价格失败，请重试"))
 )
