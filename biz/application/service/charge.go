@@ -134,7 +134,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 
 	amountResp, err2 := s.ChargeClient.GetAmount(ctx, &gencharge.GetAmountReq{
 		Increment: increment,
-		BaseInfId: fullInf.BaseInterfaceId,
+		FullInfId: fullInfId,
 	})
 	if err2 != nil {
 		return nil, err2
@@ -359,11 +359,11 @@ func (s *ChargeService) GetGradient(ctx context.Context, req *core_api.GetGradie
 }
 
 func (s *ChargeService) GetAmount(ctx context.Context, req *core_api.GetAmountReq) (*core_api.GetAmountResp, error) {
-	baseInfId := req.BaseInfId
+	fullInfId := req.FullInfId
 	increment := req.Increment
 	amountResp, err := s.ChargeClient.GetAmount(ctx, &gencharge.GetAmountReq{
 		Increment: increment,
-		BaseInfId: baseInfId,
+		FullInfId: fullInfId,
 	})
 	if err != nil {
 		return nil, err
