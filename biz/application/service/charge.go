@@ -129,23 +129,28 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 		UserId:          userId,
 		FullInterfaceId: fullInfId,
 	})
-
-	// 之前没有购买过，则创建用户的接口余量
 	if marginErr != nil || marginResp == nil || marginResp.Margin == nil {
-		createMarginResp, createMarginErr := s.ChargeClient.CreateMargin(ctx, &gencharge.CreateMarginReq{
-			UserId:          userId,
-			FullInterfaceId: fullInfId,
-			Margin:          0,
-		})
-		if createMarginErr != nil || createMarginResp == nil {
-			return util.FailResponse(createMarginResp, "创建接口余量失败，购买失败，请重试"), createMarginErr
-		}
-		fmt.Printf("createMarginResp: %+v\n", createMarginResp.String())
-		marginId = createMarginResp.MarginId
-	} else {
-		fmt.Println(marginResp.String())
-		marginId = marginResp.Margin.Id
+		return nil, consts.ErrMargin
 	}
+	marginId = marginResp.Margin.Id
+
+	// 这段逻辑已内聚到openapi-charge中
+	//// 之前没有购买过，则创建用户的接口余量
+	//if marginErr != nil || marginResp == nil || marginResp.Margin == nil {
+	//	createMarginResp, createMarginErr := s.ChargeClient.CreateMargin(ctx, &gencharge.CreateMarginReq{
+	//		UserId:          userId,
+	//		FullInterfaceId: fullInfId,
+	//		Margin:          0,
+	//	})
+	//	if createMarginErr != nil || createMarginResp == nil {
+	//		return util.FailResponse(createMarginResp, "创建接口余量失败，购买失败，请重试"), createMarginErr
+	//	}
+	//	fmt.Printf("createMarginResp: %+v\n", createMarginResp.String())
+	//	marginId = createMarginResp.MarginId
+	//} else {
+	//	fmt.Println(marginResp.String())
+	//	marginId = marginResp.Margin.Id
+	//}
 
 	// 计算总额
 	var amount int64
