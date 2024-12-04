@@ -109,7 +109,6 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	userId := userMeta.GetUserId()
 	increment := req.Increment
 	infId := req.FullInterfaceId
-	isDiscount := req.Discount
 
 	// 根据id获取完整接口
 	getResp, getErr := s.ChargeClient.GetOneFullInterface(ctx, &gencharge.GetOneFullInterfaceReq{
@@ -118,12 +117,10 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	if getErr != nil || getResp == nil || getResp.Inf == nil {
 		return util.FailResponse(nil, "未获取到模板，购买失败，请重试"), getErr
 	}
-	fmt.Printf("getResp  " + getResp.String())
 	fullInf := getResp.Inf
 	fullInfId := fullInf.Id
 
 	var marginId string
-
 	// 根据完整接口和用户id获取接口余量信息
 	marginResp, marginErr := s.ChargeClient.GetMargin(ctx, &gencharge.GetMarginReq{
 		UserId:          userId,
@@ -134,61 +131,18 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	}
 	marginId = marginResp.Margin.Id
 
-	// 这段逻辑已内聚到openapi-charge中
-	//// 之前没有购买过，则创建用户的接口余量
-	//if marginErr != nil || marginResp == nil || marginResp.Margin == nil {
-	//	createMarginResp, createMarginErr := s.ChargeClient.CreateMargin(ctx, &gencharge.CreateMarginReq{
-	//		UserId:          userId,
-	//		FullInterfaceId: fullInfId,
-	//		Margin:          0,
-	//	})
-	//	if createMarginErr != nil || createMarginResp == nil {
-	//		return util.FailResponse(createMarginResp, "创建接口余量失败，购买失败，请重试"), createMarginErr
-	//	}
-	//	fmt.Printf("createMarginResp: %+v\n", createMarginResp.String())
-	//	marginId = createMarginResp.MarginId
-	//} else {
-	//	fmt.Println(marginResp.String())
-	//	marginId = marginResp.Margin.Id
-	//}
-
-	// 计算总额
-	var amount int64
-	var rate int64
-	amount = 0
-	rate = 100
-	amount = increment * fullInf.Price
-
-	// 判断是否折扣
-	if isDiscount {
-		// 获取梯度折扣
-		gradientsResp, gradientErr := s.ChargeClient.GetGradient(ctx, &gencharge.GetGradientReq{
-			BaseInterfaceId: fullInf.BaseInterfaceId,
-		})
-		// 未获取到梯度折扣
-		if gradientErr != nil || gradientsResp == nil || gradientsResp.Gradient == nil {
-			return util.FailResponse(nil, "获取折扣失败，请重新购买"), gradientErr
-		}
-		// 选取折扣
-		gradients := gradientsResp.Gradient
-
-		// 判断折扣是否可用
-		if gradients.Status != 0 {
-			return util.FailResponse(nil, "折扣暂不可用，购买失败"), nil
-		}
-
-		for _, discount := range gradients.Discounts {
-			if increment > discount.Low {
-				rate = discount.Rate
-			}
-		}
-		amount = amount * rate / 100
+	amountResp, err2 := s.ChargeClient.GetAmount(ctx, &gencharge.GetAmountReq{
+		Increment: increment,
+		BaseInfId: fullInf.BaseInterfaceId,
+	})
+	if err2 != nil {
+		return nil, err2
 	}
 
 	txId := primitive.NewObjectID().Hex() // 事务id
 
 	// 给消息队列发送对账消息
-	err := s.Producer.SendBuyMsg(ctx, txId, -1*amount, rate, increment, fullInf.Price)
+	err := s.Producer.SendBuyMsg(ctx, txId, amountResp.Amount, amountResp.Rate, increment, fullInf.Price)
 	if err != nil {
 		return util.FailResponse(nil, "消息发送失败"), err
 	}
@@ -196,7 +150,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	// 扣除用户余额
 	remainResp, err := s.UserClient.SetRemain(ctx, &genuser.SetRemainReq{
 		UserId:    userId,
-		Increment: -1 * amount,
+		Increment: amountResp.Amount,
 		TxId:      &txId,
 	})
 	if err != nil || remainResp == nil {

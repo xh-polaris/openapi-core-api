@@ -160,3 +160,8 @@ func _buyfullinterfaceMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _getamountMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

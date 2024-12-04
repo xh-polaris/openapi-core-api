@@ -1222,6 +1222,100 @@ func (x *GetKeyForCheckResp) GetRole() Role {
 	return Role_ADMIN
 }
 
+type GetAccountByTxIdReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" form:"id" json:"id" query:"id"`
+}
+
+func (x *GetAccountByTxIdReq) Reset() {
+	*x = GetAccountByTxIdReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_openapi_user_auth_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetAccountByTxIdReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAccountByTxIdReq) ProtoMessage() {}
+
+func (x *GetAccountByTxIdReq) ProtoReflect() protoreflect.Message {
+	mi := &file_openapi_user_auth_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAccountByTxIdReq.ProtoReflect.Descriptor instead.
+func (*GetAccountByTxIdReq) Descriptor() ([]byte, []int) {
+	return file_openapi_user_auth_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *GetAccountByTxIdReq) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetAccountByTxIdResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Account *Account `protobuf:"bytes,1,opt,name=account,proto3" form:"account" json:"account" query:"account"`
+}
+
+func (x *GetAccountByTxIdResp) Reset() {
+	*x = GetAccountByTxIdResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_openapi_user_auth_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetAccountByTxIdResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAccountByTxIdResp) ProtoMessage() {}
+
+func (x *GetAccountByTxIdResp) ProtoReflect() protoreflect.Message {
+	mi := &file_openapi_user_auth_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAccountByTxIdResp.ProtoReflect.Descriptor instead.
+func (*GetAccountByTxIdResp) Descriptor() ([]byte, []int) {
+	return file_openapi_user_auth_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *GetAccountByTxIdResp) GetAccount() *Account {
+	if x != nil {
+		return x.Account
+	}
+	return nil
+}
+
 var File_openapi_user_auth_proto protoreflect.FileDescriptor
 
 var file_openapi_user_auth_proto_rawDesc = []byte{
@@ -1339,7 +1433,14 @@ var file_openapi_user_auth_proto_rawDesc = []byte{
 	0x65, 0x63, 0x6b, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x26, 0x0a, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x18, 0x05, 0x20,
 	0x01, 0x28, 0x0e, 0x32, 0x12, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x61, 0x70, 0x69, 0x2e, 0x75, 0x73,
-	0x65, 0x72, 0x2e, 0x52, 0x6f, 0x6c, 0x65, 0x52, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x42, 0x79, 0x0a,
+	0x65, 0x72, 0x2e, 0x52, 0x6f, 0x6c, 0x65, 0x52, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x22, 0x25, 0x0a,
+	0x13, 0x47, 0x65, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x42, 0x79, 0x54, 0x78, 0x49,
+	0x64, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x02, 0x69, 0x64, 0x22, 0x47, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x42, 0x79, 0x54, 0x78, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x12, 0x2f, 0x0a, 0x07,
+	0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e,
+	0x6f, 0x70, 0x65, 0x6e, 0x61, 0x70, 0x69, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x2e, 0x41, 0x63, 0x63,
+	0x6f, 0x75, 0x6e, 0x74, 0x52, 0x07, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x42, 0x79, 0x0a,
 	0x21, 0x63, 0x6f, 0x6d, 0x2e, 0x78, 0x68, 0x70, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x73, 0x2e, 0x69,
 	0x64, 0x6c, 0x67, 0x65, 0x6e, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x61, 0x70, 0x69, 0x2e, 0x75, 0x73,
 	0x65, 0x72, 0x42, 0x09, 0x41, 0x75, 0x74, 0x68, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
@@ -1362,7 +1463,7 @@ func file_openapi_user_auth_proto_rawDescGZIP() []byte {
 	return file_openapi_user_auth_proto_rawDescData
 }
 
-var file_openapi_user_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_openapi_user_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_openapi_user_auth_proto_goTypes = []interface{}{
 	(*SignUpReq)(nil),               // 0: openapi.user.SignUpReq
 	(*SignUpResp)(nil),              // 1: openapi.user.SignUpResp
@@ -1384,26 +1485,30 @@ var file_openapi_user_auth_proto_goTypes = []interface{}{
 	(*DeleteKeyResp)(nil),           // 17: openapi.user.DeleteKeyResp
 	(*GetKeyForCheckReq)(nil),       // 18: openapi.user.GetKeyForCheckReq
 	(*GetKeyForCheckResp)(nil),      // 19: openapi.user.GetKeyForCheckResp
-	(Role)(0),                       // 20: openapi.user.Role
-	(UserStatus)(0),                 // 21: openapi.user.UserStatus
-	(*basic.PaginationOptions)(nil), // 22: basic.PaginationOptions
-	(*Key)(nil),                     // 23: openapi.user.Key
-	(KeyStatus)(0),                  // 24: openapi.user.KeyStatus
+	(*GetAccountByTxIdReq)(nil),     // 20: openapi.user.GetAccountByTxIdReq
+	(*GetAccountByTxIdResp)(nil),    // 21: openapi.user.GetAccountByTxIdResp
+	(Role)(0),                       // 22: openapi.user.Role
+	(UserStatus)(0),                 // 23: openapi.user.UserStatus
+	(*basic.PaginationOptions)(nil), // 24: basic.PaginationOptions
+	(*Key)(nil),                     // 25: openapi.user.Key
+	(KeyStatus)(0),                  // 26: openapi.user.KeyStatus
+	(*Account)(nil),                 // 27: openapi.user.Account
 }
 var file_openapi_user_auth_proto_depIdxs = []int32{
-	20, // 0: openapi.user.SignUpReq.role:type_name -> openapi.user.Role
-	20, // 1: openapi.user.GetUserInfoResp.role:type_name -> openapi.user.Role
-	21, // 2: openapi.user.GetUserInfoResp.status:type_name -> openapi.user.UserStatus
-	21, // 3: openapi.user.SetUserInfoReq.status:type_name -> openapi.user.UserStatus
-	22, // 4: openapi.user.GetKeysReq.paginationOptions:type_name -> basic.PaginationOptions
-	23, // 5: openapi.user.GetKeysResp.keys:type_name -> openapi.user.Key
-	24, // 6: openapi.user.UpdateKeyReq.status:type_name -> openapi.user.KeyStatus
-	20, // 7: openapi.user.GetKeyForCheckResp.role:type_name -> openapi.user.Role
-	8,  // [8:8] is the sub-list for method output_type
-	8,  // [8:8] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	22, // 0: openapi.user.SignUpReq.role:type_name -> openapi.user.Role
+	22, // 1: openapi.user.GetUserInfoResp.role:type_name -> openapi.user.Role
+	23, // 2: openapi.user.GetUserInfoResp.status:type_name -> openapi.user.UserStatus
+	23, // 3: openapi.user.SetUserInfoReq.status:type_name -> openapi.user.UserStatus
+	24, // 4: openapi.user.GetKeysReq.paginationOptions:type_name -> basic.PaginationOptions
+	25, // 5: openapi.user.GetKeysResp.keys:type_name -> openapi.user.Key
+	26, // 6: openapi.user.UpdateKeyReq.status:type_name -> openapi.user.KeyStatus
+	22, // 7: openapi.user.GetKeyForCheckResp.role:type_name -> openapi.user.Role
+	27, // 8: openapi.user.GetAccountByTxIdResp.account:type_name -> openapi.user.Account
+	9,  // [9:9] is the sub-list for method output_type
+	9,  // [9:9] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func file_openapi_user_auth_proto_init() {
@@ -1652,6 +1757,30 @@ func file_openapi_user_auth_proto_init() {
 				return nil
 			}
 		}
+		file_openapi_user_auth_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetAccountByTxIdReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_openapi_user_auth_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetAccountByTxIdResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_openapi_user_auth_proto_msgTypes[4].OneofWrappers = []interface{}{}
 	file_openapi_user_auth_proto_msgTypes[10].OneofWrappers = []interface{}{}
@@ -1661,7 +1790,7 @@ func file_openapi_user_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_openapi_user_auth_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

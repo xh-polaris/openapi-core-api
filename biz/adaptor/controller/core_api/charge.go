@@ -273,3 +273,19 @@ func GetGradient(ctx context.Context, c *app.RequestContext) {
 	resp, err := p.ChargeService.GetGradient(ctx, &req)
 	adaptor.PostProcess(ctx, c, &req, resp, err)
 }
+
+// GetAmount .
+// @router /gradient/amount [POST]
+func GetAmount(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req core_api.GetAmountReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp := new(core_api.GetAmountResp)
+
+	c.JSON(consts.StatusOK, resp)
+}

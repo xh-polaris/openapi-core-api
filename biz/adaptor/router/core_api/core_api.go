@@ -39,6 +39,7 @@ func Register(r *server.Hertz) {
 	}
 	{
 		_gradient := root.Group("/gradient", _gradientMw()...)
+		_gradient.POST("/amount", append(_getamountMw(), core_api.GetAmount)...)
 		_gradient.POST("/create", append(_creategradientMw(), core_api.CreateGradient)...)
 		_gradient.GET("/get", append(_getgradientMw(), core_api.GetGradient)...)
 		_gradient.POST("/update", append(_updategradientMw(), core_api.UpdateGradient)...)
