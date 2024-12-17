@@ -407,14 +407,8 @@ github.com/xh-polaris/gopkg v0.0.0-20231209130217-cd07835dcd83 h1:pFqAGM4BW3M8dE
 github.com/xh-polaris/gopkg v0.0.0-20231209130217-cd07835dcd83/go.mod h1:wfDSHgcCm4EaNoVZJy6uumUknqbXRpcI8KuVraA/bEg=
 github.com/xh-polaris/meowchat-core-api v1.0.78 h1:OFgEWLo/pvUt7uV7ROdhGQo+9r730Z2ahkKjM8HnfLw=
 github.com/xh-polaris/meowchat-core-api v1.0.78/go.mod h1:V/S0ctnMK/rCvKCujXrHWXyYOS3roD6GtakdmYE+Frs=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241109114442-d33be10c64c7 h1:Zux7HUTXNUGHGFPL1X4TlXprFzIbl8O29+oZGb80RSA=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241109114442-d33be10c64c7/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241123100835-25d5d670516a h1:aTqUtV1nCxGvw8Hn077KS/Vnt63nLCA6467UkcER0NM=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241123100835-25d5d670516a/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241204074118-6d7c7c0f5df5 h1:eH+p+SyzDb0IXVOrDwKmtdBFYz2K6aE8MulrMYW3wxQ=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241204074118-6d7c7c0f5df5/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241204080206-0f306efde9b7 h1:1ULXo2QrOwYkURORE63UqeHNfBi3Dd61zw15x0kucpM=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241204080206-0f306efde9b7/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
+github.com/xh-polaris/service-idl-gen-go v0.0.0-20241122152650-98be18e27b88 h1:GfbXInaD3pg0DaLqyLBjqTwDzpReLQDxnEHV77NQOMw=
+github.com/xh-polaris/service-idl-gen-go v0.0.0-20241122152650-98be18e27b88/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241204081619-6c45743ef911 h1:vjQ9tplmLj/sEegxV78KmIAdTrVt1rvfIG76mS6Pzrk=
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241204081619-6c45743ef911/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
