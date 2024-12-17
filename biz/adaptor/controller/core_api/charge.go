@@ -24,7 +24,7 @@ func CreateBaseInterface(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
@@ -46,7 +46,7 @@ func UpdateBaseInterface(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
@@ -68,7 +68,7 @@ func DeleteBaseInterface(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
@@ -106,7 +106,7 @@ func CreateFullInterface(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
@@ -128,7 +128,7 @@ func UpdateFullInterface(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
@@ -150,7 +150,7 @@ func UpdateMargin(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
@@ -172,7 +172,7 @@ func DeleteFullInterface(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
@@ -226,7 +226,7 @@ func CreateGradient(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
@@ -248,7 +248,7 @@ func UpdateGradient(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 权限校验
-	if adaptor.CheckRole(ctx, constsx.Admin) {
+	if !adaptor.CheckRole(ctx, constsx.Admin) {
 		adaptor.PostProcess(ctx, c, &req, nil, constsx.ErrRole)
 		return
 	}
