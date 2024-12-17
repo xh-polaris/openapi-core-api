@@ -2,6 +2,7 @@ package adaptor
 
 import (
 	"context"
+	"fmt"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/config"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/consts"
 	"github.com/xh-polaris/openapi-core-api/biz/infrastructure/rpc/openapi_user"
@@ -43,6 +44,7 @@ func (m *RightsManager) AdminOnly(ctx context.Context) bool {
 		if resp != nil {
 			info += resp.String()
 		}
+		fmt.Print(info)
 		log.Info(info)
 
 		return false
