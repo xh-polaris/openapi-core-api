@@ -14,7 +14,7 @@ require (
 	github.com/rabbitmq/amqp091-go v1.10.0
 	github.com/xh-polaris/gopkg v0.0.0-20231209130217-cd07835dcd83
 	github.com/xh-polaris/meowchat-core-api v1.0.78
-	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241122152650-98be18e27b88
+	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241217080745-957498d2acb2
 	github.com/zeromicro/go-zero v1.7.2
 	go.mongodb.org/mongo-driver v1.16.1
 	go.opentelemetry.io/contrib/propagators/b3 v1.20.0
