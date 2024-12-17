@@ -6,7 +6,7 @@ require (
 	github.com/bytedance/gopkg v0.1.1
 	github.com/bytedance/sonic v1.12.2
 	github.com/cloudwego/hertz v0.9.3
-	github.com/golang-jwt/jwt/v4 v4.5.0
+	github.com/golang-jwt/jwt/v4 v4.5.1
 	github.com/google/wire v0.5.0
 	github.com/hertz-contrib/monitor-prometheus v0.0.0-20221109015426-47eab4e08245
 	github.com/hertz-contrib/obs-opentelemetry/tracing v0.4.1
