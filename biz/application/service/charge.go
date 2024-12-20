@@ -142,8 +142,10 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 
 	txId := primitive.NewObjectID().Hex() // 事务id
 
+	amount := -1 * amountResp.Amount
+
 	// 给消息队列发送对账消息
-	err := s.Producer.SendBuyMsg(ctx, txId, amountResp.Amount, amountResp.Rate, increment, fullInf.Price)
+	err := s.Producer.SendBuyMsg(ctx, txId, amount, amountResp.Rate, increment, fullInf.Price)
 	if err != nil {
 		return util.FailResponse(nil, "消息发送失败"), err
 	}
@@ -151,7 +153,7 @@ func (s *ChargeService) BuyFullInterface(ctx context.Context, req *core_api.BuyF
 	// 扣除用户余额
 	remainResp, err := s.UserClient.SetRemain(ctx, &genuser.SetRemainReq{
 		UserId:    userId,
-		Increment: amountResp.Amount,
+		Increment: amount,
 		TxId:      &txId,
 	})
 	if err != nil || remainResp == nil {
